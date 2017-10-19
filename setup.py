@@ -8,5 +8,5 @@ setup(
     author_email='josmos43@gmail.com',
     packages=find_packages(),  # same as name
     install_requires=['xxhash', 'docker', "PyYaml"],  # external packages as dependencies
-    include_package_data=True
+    package_data={'bioportainer': ['containers/*', 'containers/dockerfiles/*/*',]},
 )

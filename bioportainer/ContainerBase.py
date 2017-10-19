@@ -59,6 +59,7 @@ class Container(metaclass=ABCMeta):
 
                     print("not found!\nTry to build image from dockerfile...", end="")
                     try:
+
                         dockerfiledir = os.path.join(os.path.dirname(__file__), obj._image_directory)
                         Conf.config.client.images.build(path=dockerfiledir, tag=obj.image, rm=True)
                         print("done!")
