@@ -103,6 +103,7 @@ The container object holds all available containers as attributes.
  - mount: tuple of file paths if single files need to be mounted to the container (e.g. a reference sequence)
  - subcmd string specifying the sub command (only if a container provides more than one command)
  
+
  Return:
  
  SampleIO object
