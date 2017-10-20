@@ -231,8 +231,8 @@ class SampleIO:
         if file_type in ["fasta-pe", "fasta-se", "fasta-inter"]:
             return [".fa", ".fasta"]
 
-        if file_type in ["fasta-pe-gz", "fasta-se-gz", "fasta-inter-gz"]:
-            return [".fa.gz", ".fasta.gz"]
+        if file_type in ["fasta-pe-gz", "fasta-se-gz", "fasta-se-gz"]:
+            return [fag ]
 
         if file_type in ["fasta-pe-bz", "fasta-se-bz", "fasta-inter-bz"]:
             return [".fa.bz2", ".fasta.bz2"]

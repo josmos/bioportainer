@@ -1,8 +1,6 @@
 import bioportainer.containers.Bowtie2_v2_2_9
 import bioportainer.containers.Fastqc_v0_11_15
 import bioportainer.containers.Megahit_v1_1_1
-import bioportainer.containers.Megahit_v1_1_1
-import bioportainer.containers.Megahit_v1_1_2
 import bioportainer.containers.Megahit_v1_1_2
 import bioportainer.containers.Prodigal_v2_6_3
 import bioportainer.containers.Recycler_latest
