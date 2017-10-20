@@ -1,4 +1,4 @@
-#Bioportainer
+# Bioportainer
 
 A python package for implementing simple workflows with Biocontainers. (https://github.com/BioContainers)
 
@@ -117,21 +117,25 @@ The container object holds all available containers as attributes.
  Return:
  SampleList object
  
- ##### set_opt_params()
+ 
+ #####  set_opt_params()
  
  chained method to override the default values for optional parameters of the run command. Provides 
  the signature with all parameters availiable in the container (except those controlling input/output).
  Container with subcommands have the method implemented with functionname set_`<subcmd>`_params
  
- ##### set_input_type()
+ 
+ #####  set_input_type()
  
  change the input-type for a container
  
- ##### set_output_type()
+ 
+ #####  set_output_type()
  
  select the file_type for the SampleIO object returned from the run command
  
- ##### set_output_filter()
+ 
+ #####  set_output_filter()
  
  add a regex in addition to the output_type to filter the output files
  
