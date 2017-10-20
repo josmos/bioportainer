@@ -19,7 +19,7 @@ Python 3.4+ , xxhash, PyYaml, docker
     # parallel containers: 2 # maximum number of containers to set_param parallel (default: 1)
     # threads per container: 4 # max number of threads per container (default : cpus available)
     # workdir: /path/to/output/directory/ # (default: working directory)
-    # tempdir: /path/to/store/tmp/files/ # directory for temporary files (default: working directory)
+    # tempdir: /path/to/tmp/files/ # directory for temporary files (default: working directory)
     # log: mylog.txt # name of log file written to workdir (default: no logging)
      
     # Specify the input:
