@@ -112,7 +112,8 @@ The container object holds all available containers as attributes.
  
  Parameters:
  
- same as run positional arguments are type SampleList
+ same as run (positional arguments are of type SampleList)
+ 
  threads:override the number of cpus for the container specified in configfile (optional)
  
  Return:
