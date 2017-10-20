@@ -212,7 +212,7 @@ class SampleIO:
         return cls(yaml_dict, hostdir=os.path.split(yaml_dict["files"][0])[0])
 
     @classmethod
-    def from_user(cls, id_, type_, files):  # not tested!!!!
+    def from_user(cls, id_, type_, files):
         """
         Init method for user input
         :param id_: Sample id
