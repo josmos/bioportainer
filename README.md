@@ -82,6 +82,14 @@ couple the input and output between containers.
  
 ##### delete_files(): remove files in the SampleIO object(s) from the filesystem
 
+##### from_user(id_, type_, files)
+
+Both classes have a method to manually create an instance. Example:
+    
+    from bioportainer import SampleIO, SampleList
+    refseq = SampleIO.SampleIO.from_user("refseq", "type", ("path/to/file",))
+    refseqs = SampleList.SampleList.from_user(*[refseq] * 2) 
+
 
 ### container Object:
 

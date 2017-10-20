@@ -28,6 +28,10 @@ class SampleList(list):
         samples = [Sio.SampleIO.from_configfile(s) for s in configfile.get("Samples")]
         return cls(samples)
 
+    @classmethod
+    def from_user(cls, *samples):
+        return cls(samples)
+
     def filter_files(self, regex):
         new = [s.filter_files(regex) for s in Sio.copy.copy(self)]
         return new

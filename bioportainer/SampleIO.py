@@ -208,6 +208,7 @@ class SampleIO:
         :param yaml_dict:
         :return: SampleIO instance
         """
+        print(yaml_dict)
         return cls(yaml_dict, hostdir=os.path.split(yaml_dict["files"][0])[0])
 
     @classmethod
@@ -219,7 +220,9 @@ class SampleIO:
         :param files: list of input files
         :return: SampleIO instance
         """
-        return cls({id_: id_, type_: type_, files: files}, hostdir=os.path.split(files[0])[0])
+        d = {"id": id_, "type": type_, "files": list(files)}
+        print(d)
+        return cls(d, hostdir=os.path.split(files[0])[0])
 
     @staticmethod
     def get_extensions(file_type):
@@ -231,8 +234,8 @@ class SampleIO:
         if file_type in ["fasta-pe", "fasta-se", "fasta-inter"]:
             return [".fa", ".fasta"]
 
-        if file_type in ["fasta-pe-gz", "fasta-se-gz", "fasta-se-gz"]:
-            return [fag ]
+        if file_type in ["fasta-pe-gz", "fasta-se-gz", "fasta-inter-gz"]:
+            return [".fa.gz", ".fasta.gz"]
 
         if file_type in ["fasta-pe-bz", "fasta-se-bz", "fasta-inter-bz"]:
             return [".fa.bz2", ".fasta.bz2"]

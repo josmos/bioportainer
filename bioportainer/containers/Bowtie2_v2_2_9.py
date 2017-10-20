@@ -214,7 +214,7 @@ class Bowtie2(MultiCmdContainer):
         return self
 
     @MultiCmdContainer.impl_run
-    def run(self, ref_io, paired_io, unpaired_io, subcmd="bowtie2"):
+    def run(self, paired_io, unpaired_io, ref_io, subcmd="bowtie2"):
         """
         :param sampleIO: input object with input files
         :param subcmd: "bowtie2" or "bowtie2-build" or "bowtie2-inspect"
