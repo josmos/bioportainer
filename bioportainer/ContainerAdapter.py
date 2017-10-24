@@ -8,6 +8,7 @@ import bioportainer.containers.Recycler_v0_62
 import bioportainer.containers.Samtools_v1_3_1
 import bioportainer.containers.Trimmomatic_v0_36
 import bioportainer.containers.hmmer_v3_1b2
+import bioportainer.containers.spades_v3_11_0
 
 
 class ContainerAdapter():
@@ -52,10 +53,14 @@ class ContainerAdapter():
             input_type="fastq-pe-gz")
 
         self.samtools_v1_3_1 = bioportainer.containers.Samtools_v1_3_1.Samtools_v1_3_1(
-            "biocontainers/samtools:1.3.1", "containers/dockerfiles/samtools:1.3.1",
+            "biocontainers/samtools:1.3.1", "containers/dockerfiles/Samtools_v1_3_1",
             ["view"], input_allowed=["sam", "bam", "cram"])
 
         self.trimmomatic_v0_36 = bioportainer.containers.Trimmomatic_v0_36.Trimmomatic_v0_36(
             "customcontainers/trimmomatic:0.36", "containers/dockerfiles/trimmomatic_v0_36",
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-pe-bz"],
             output_type="fastq-pe")
+
+        self.spades_v3_11_0 = bioportainer.containers.spades_v3_11_0.Spades_v3_11_0(
+            "customcontainers/spades:3.11.0", "containers/dockerfiles/spades_v3_11_0",
+            ["metaspades.py"], input_allowed=["fastq-pe", "fastq_inter"], output_type="fasta-se")

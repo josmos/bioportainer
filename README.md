@@ -2,6 +2,16 @@
 
 A python package for implementing simple workflows with Biocontainers. (https://github.com/BioContainers)
 
+Supported tools:
+- Bowtie2 v2.2.9
+- FastQC v0.11.15
+- Hmmer v3.1b2
+- Megahit v1.1.1 / v 1.1.2
+- Prodigal v2.6.3
+- Recycler latest
+- Samtools v.1.3.1
+- Trimmomatic v0.36
+
 ## Install:
     
     python3 setup.py install
