@@ -63,4 +63,4 @@ class ContainerAdapter():
 
         self.spades_v3_11_0 = bioportainer.containers.spades_v3_11_0.Spades_v3_11_0(
             "customcontainers/spades:3.11.0", "containers/dockerfiles/spades_v3_11_0",
-            ["metaspades.py"], input_allowed=["fastq-pe", "fastq_inter"], output_type="fasta-se")
+            ["metaspades"], input_allowed=["fastq-pe", "fastq_inter"])

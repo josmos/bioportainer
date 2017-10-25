@@ -7,6 +7,6 @@ setup(
     author='Josef Moser',
     author_email='josmos43@gmail.com',
     packages=find_packages(),  # same as name
-    install_requires=['xxhash', 'docker', "PyYaml"],  # external packages as dependencies
+    install_requires=['xxhash', 'docker', "PyYaml", "psutil"],  # external packages as dependencies
     package_data={'bioportainer': ['containers/*.py', 'containers/dockerfiles/*/Dockerfile']},
 )

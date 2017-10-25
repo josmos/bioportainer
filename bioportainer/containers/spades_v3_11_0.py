@@ -1,6 +1,6 @@
 from bioportainer.Config import config
 from bioportainer.MultiCmdContainer import MultiCmdContainer
-import bioportainer.memory_check
+import psutil
 
 
 class Spades_v3_11_0(MultiCmdContainer):
@@ -11,8 +11,8 @@ class Spades_v3_11_0(MultiCmdContainer):
     @MultiCmdContainer.impl_set_opt_params
     def set_metaspades_params(self, only_error_correction=False, only_assembler=False, irontorrent=False,
                               disable_gzip_output=False, disable_rr=False, t=config.container_threads,
-                              memory=str(int(bioportainer.memory_check.memoryCheck()) / config.threads),
-                              tmp_dir=config.tmp_dir, phred_offset=False, k=False):
+                              memory="{:.0f}".format(int((psutil.virtual_memory().available / 1024 **3) / config.threads)),
+                              phred_offset=False, k=False):
         """SPAdes genome assembler v3.11.0 [metaSPAdes mode]
 
 Usage: /home/biodocker/SPAdes-3.11.0-Linux/bin/metaspades.py [options] -o <output_dir>
@@ -53,7 +53,7 @@ Advanced options:
 -m/--memory	<int>		RAM limit for SPAdes in Gb (terminates if exceeded) [default: 250]
 --tmp-dir	<dirname>	directory for temporary files [default: <output_dir>/tmp]
 -k		<int,int,...>	comma-separated list of k-mer sizes (must be odd and less than 128) [default: 'auto']
---phred-offset	<33 or 64>	PHRED quality offset in the input reads (33 or 64) default: auto-detect]
+--phred-offset	<33 or 64>	PHRED quality offset in the input reads (33 or 64) Sdefault: auto-detect]
 
         """
         return self
@@ -63,15 +63,15 @@ Advanced options:
 
         if subcmd == "metaspades":
             inp = []
-            if self.input_type == "fastq-pe":
+            if paired_io.io_type == "fastq-pe-gz":
                 inp = ["--pe1-1", paired_io.files[0].name, "--pe1-2", paired_io.files[1].name]
-            elif self.input_type == "fastq-inter":
+            elif paired_io.io_type == "fastq-inter":
                 inp = ["---pe1-12", paired_io.files[0].name]
             if unpaired_io:
                 for f in unpaired_io.files:
                     inp += ["--pe1-s", f.name]
             out = ["-o", "/data/"]
-            self.cmd = [subcmd] + self.get_opt_params("metaspades_params") + inp + out
+            self.cmd = [subcmd + ".py"] + self.get_opt_params("metaspades_params") + inp + out
 
     @MultiCmdContainer.impl_run_parallel
     def run_parallel(self, paired_io, unpaired_io, subcmd="metaspades"):
