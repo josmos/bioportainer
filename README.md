@@ -10,16 +10,18 @@ Supported tools:
 - Prodigal v2.6.3
 - Recycler latest
 - Samtools v.1.3.1
+- Spades v3.11.0 (only Metaspades)
 - Trimmomatic v0.36
 
 ## Install:
     
-    python3 setup.py install
+    cd /path/to/repo/
+    pip3 install .
 
 Dependencies: 
 Docker (tested with Version: 17.05.0-ce; API version:  1.29)
 
-Python 3.4+ , xxhash, PyYaml, docker
+Python >= 3.4, xxhash, PyYaml, docker, psutil
 
 ## Basic Usage:
 
@@ -49,6 +51,15 @@ Python 3.4+ , xxhash, PyYaml, docker
     input = config.load_configfile(configfile="config.yaml")
     tool1_output = container.tool1.run_parallel(input)
     tool2_output = container.tool2.run_parallel(tool1_output)
+
+Alternatively you can run one sample after the other:
+    
+    from bioportainer import config, container
+    input = config.load_configfile(configfile="config.yaml")
+    for sample in input:
+        tool1_output = container.tool1.run(input)
+        tool2_output = container.tool2.run(tool1_output)
+    
 
 An example Workflow can be found in the *test/* directory
     
