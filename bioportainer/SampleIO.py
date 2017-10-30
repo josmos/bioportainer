@@ -58,7 +58,8 @@ class SampleIO:
         self._id = input_dict["id"]
         self._io_type = input_dict["type"]
         self._host_dir = hostdir
-        self._files = sorted([SampleFile(p, self._host_dir) for p in input_dict["files"]], key=operator.attrgetter('name'))
+        self._files = sorted([SampleFile(os.path.abspath(p), self._host_dir)
+                              for p in input_dict["files"]], key=operator.attrgetter('name'))
         self._input_files = input_files
         if input_files:  # files of pre-step for comparison with pickled objects
             self._input_files = input_files
@@ -208,8 +209,7 @@ class SampleIO:
         :param yaml_dict:
         :return: SampleIO instance
         """
-        print(yaml_dict)
-        return cls(yaml_dict, hostdir=os.path.split(yaml_dict["files"][0])[0])
+        return cls(yaml_dict, hostdir=os.path.split(os.path.abspath(yaml_dict["files"][0]))[0])
 
     @classmethod
     def from_user(cls, id_, type_, files):
@@ -220,8 +220,9 @@ class SampleIO:
         :param files: list of input files
         :return: SampleIO instance
         """
-        d = {"id": id_, "type": type_, "files": list(files)}
-        print(d)
+        files = [os.path.abspath(f) for f in files]
+        d = {"id": id_, "type": type_, "files": files}
+
         return cls(d, hostdir=os.path.split(files[0])[0])
 
     @staticmethod

@@ -2,3 +2,15 @@
 .idea/
 bioportainer/containers/__pycache__/
 ls
+.cacheIO/
+bioportainer.egg-info/
+build/
+dist/
+bioportainer/__pycache__/ContainerAdapter.cpython-36.pyc
+bioportainer/__pycache__/ContainerBase.cpython-36.pyc
+bioportainer/__pycache__/Logger.cpython-36.pyc
+bioportainer/__pycache__/MultiCmdContainer.cpython-36.pyc
+bioportainer/__pycache__/SampleIO.cpython-36.pyc
+bioportainer/__pycache__/SampleList.cpython-36.pyc
+bioportainer/__pycache__/SingleCmdContainer.cpython-36.pyc
+mylog.txt

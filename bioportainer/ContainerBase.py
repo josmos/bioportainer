@@ -206,12 +206,6 @@ class Container(metaclass=ABCMeta):
                     flag = False
 
     def make_volumes(self, sample_io, others, mountfiles):
-        for i, o in enumerate(others):
-            if o is None:
-                del others[i]
-        if sample_io is None:
-            sample_io = others[0]
-            others = others[1:]
         v = {sample_io.host_dir: {"bind": "/data1/", "mode": "rw"},
              self.out_dir: {"bind": "/data/", "mode": "rw"}}
         fp = os.path.join(self.out_dir, "init.sh")  # entry script
@@ -254,10 +248,12 @@ class Container(metaclass=ABCMeta):
             cnf = Conf.config
             try:
                 args_unpacked = (args[0],) + args[1]
-                sample_io, *others = args[1]
+                io_list = args[1]
             except TypeError:  # if not called from run_parallel
                 args_unpacked = args
-                sample_io, *others = args[1:]
+                io_list = args[1:]
+
+            sample_io, * others = [x for x in io_list if x is not None]
 
             c = args[0]
             c.container_sample_dir = os.path.join(c.container_dir, sample_io.id)

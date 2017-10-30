@@ -1,0 +1,12 @@
+parallel containers: 2 # maximum number of containers to set_param parallel
+threads per container: 4 # max number of threads per container (ALL or int)
+log: test.log # path to log file or None
+Samples:
+    - id: Sample1
+      type: fastq-pe-gz # input file format
+      files: [Sample1_sub_R1.fq.gz,
+              Sample1_sub_R2.fq.gz]
+    - id: Sample2
+      type: fastq-pe-gz # input file format
+      files: [Sample2_sub_R1.fq.gz,
+              Sample2_sub_R2.fq.gz]

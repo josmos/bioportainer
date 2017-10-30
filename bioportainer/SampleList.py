@@ -41,6 +41,9 @@ class SampleList(list):
         Delete all files from SampleIO objects in list
         :return:
         """
-        [s.delete_files() for s in self]
+        try:
+            [s.delete_files() for s in self]
+        except FileNotFoundError:
+            pass
 
 ContainerIO = SampleList
