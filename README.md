@@ -5,6 +5,7 @@ A python package for implementing simple workflows with Biocontainers. (https://
 Supported tools:
 - Bowtie2 v2.2.9
 - FastQC v0.11.15
+- Hisat2 v2.1.0 (not tested)
 - Hmmer v3.1b2
 - Megahit v1.1.1 / v 1.1.2
 - Prodigal v2.6.3

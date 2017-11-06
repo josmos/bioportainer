@@ -64,3 +64,9 @@ class ContainerAdapter():
         self.spades_v3_11_0 = bioportainer.containers.spades_v3_11_0.Spades_v3_11_0(
             "customcontainers/spades:3.11.0", "containers/dockerfiles/spades_v3_11_0",
             ["metaspades"], input_allowed=["fastq-pe", "fastq_inter"])
+
+        self.hisat_v2_1_0 = bioportainer.containers.Hisat_v2_1_0.Hisat_v2_1_0("customcontainers/hisat:2.1.0",
+            "containers/dockerfiles/hisat_v2_1_0",
+            ["hisat2", "hisat2-inspect", "hisat2-build"],
+            input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz",
+                           "fasta-se", "bt2"])
