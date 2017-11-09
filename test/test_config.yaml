@@ -4,9 +4,9 @@ log: test.log # path to log file or None
 Samples:
     - id: Sample1
       type: fastq-pe-gz # input file format
-      files: [Sample1_sub_R1.fq.gz,
-              Sample1_sub_R2.fq.gz]
+      files: [/home/josmos/pycharmprojects/bioportainer/test/Sample1_sub_R1.fq.gz,
+              /home/josmos/pycharmprojects/bioportainer/test/Sample1_sub_R2.fq.gz]
     - id: Sample2
       type: fastq-pe-gz # input file format
-      files: [Sample2_sub_R1.fq.gz,
-              Sample2_sub_R2.fq.gz]
+      files: [/home/josmos/pycharmprojects/bioportainer/test/Sample2_sub_R1.fq.gz,
+              /home/josmos/pycharmprojects/bioportainer/test/Sample2_sub_R2.fq.gz]

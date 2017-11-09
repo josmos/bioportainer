@@ -9,6 +9,7 @@ import bioportainer.containers.Samtools_v1_3_1
 import bioportainer.containers.Trimmomatic_v0_36
 import bioportainer.containers.hmmer_v3_1b2
 import bioportainer.containers.spades_v3_11_0
+import bioportainer.containers.Hisat_v2_1_0
 
 
 class ContainerAdapter():

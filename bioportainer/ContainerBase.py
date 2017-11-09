@@ -206,6 +206,8 @@ class Container(metaclass=ABCMeta):
                     flag = False
 
     def make_volumes(self, sample_io, others, mountfiles):
+        if not os.path.exists(self.out_dir):  # create output directory
+            sample_io.with_lock(distutils.dir_util.mkpath(self.out_dir))
         v = {sample_io.host_dir: {"bind": "/data1/", "mode": "rw"},
              self.out_dir: {"bind": "/data/", "mode": "rw"}}
         fp = os.path.join(self.out_dir, "init.sh")  # entry script
@@ -260,11 +262,8 @@ class Container(metaclass=ABCMeta):
             c.out_dir = os.path.join(cnf.work_dir, c.container_dir, sample_io.id)
             try:
                 mountfiles = kwargs["mount"]
-                print(mountfiles)
             except KeyError:
                 mountfiles = None
-            if not os.path.exists(c.out_dir):  # create output directory
-                sample_io.with_lock(distutils.dir_util.mkpath(c.out_dir))
 
             func(*args_unpacked, **kwargs)
 

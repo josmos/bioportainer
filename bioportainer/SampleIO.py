@@ -9,6 +9,7 @@ import bioportainer.Config
 
 class SampleFile:
     def __init__(self, path, host_dir):
+        path = path if path.startswith("/") else os.path.abspath(path)
         self._name = self.set_name(path, host_dir)
         self._file_path = path
         self._checksum = self.calc_checksum()
@@ -58,8 +59,8 @@ class SampleIO:
         self._id = input_dict["id"]
         self._io_type = input_dict["type"]
         self._host_dir = hostdir
-        self._files = sorted([SampleFile(os.path.abspath(p), self._host_dir)
-                              for p in input_dict["files"]], key=operator.attrgetter('name'))
+        self._files = sorted([SampleFile(p, self._host_dir) for p in input_dict["files"]],
+                             key=operator.attrgetter('name'))
         self._input_files = input_files
         if input_files:  # files of pre-step for comparison with pickled objects
             self._input_files = input_files
