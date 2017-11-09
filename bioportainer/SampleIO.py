@@ -1,6 +1,8 @@
 import copy
 import operator
 import os
+from pathlib import Path
+import shutil
 import pickle
 import re
 import xxhash
@@ -291,3 +293,15 @@ class SampleIO:
         subdir = os.path.join(os.path.split(os.path.split(self.host_dir)[0])[-1], self.id)
         [Conf.config.logger.info("File deleted: {}".format(f.name), extra={'name_override': subdir})
          for f in self.files]
+
+    def move(self, directory_name):
+        print(self.host_dir)
+        new_dir = list(Path(self.host_dir).parts)
+        new_dir[-2] = directory_name
+        new_dir = os.path.join(*new_dir)
+        print(new_dir)
+        shutil.move(self.host_dir, new_dir)
+        self._host_dir = new_dir
+        for file in self.files:
+            p_list = list(Path(file.file_path).parts)
+            p_list[-3] = directory_name

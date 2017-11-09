@@ -46,4 +46,10 @@ class SampleList(list):
         except FileNotFoundError:
             pass
 
+    def move(self, directory_name):
+        new = [s.move(directory_name) for s in Sio.copy.copy(self)]
+        return new
+
+
 ContainerIO = SampleList
+
