@@ -295,13 +295,15 @@ class SampleIO:
          for f in self.files]
 
     def move(self, directory_name):
-        print(self.host_dir)
         new_dir = list(Path(self.host_dir).parts)
         new_dir[-2] = directory_name
         new_dir = os.path.join(*new_dir)
-        print(new_dir)
         shutil.move(self.host_dir, new_dir)
-        self._host_dir = new_dir
+
+        import bioportainer.Config as Conf
         for file in self.files:
             p_list = list(Path(file.file_path).parts)
             p_list[-3] = directory_name
+            Conf.config.logger.info("File {} moved from {} to {} ".format(file.name, self.host_dir, new_dir),
+                                    extra={'name_override': self.id})
+        self._host_dir = new_dir

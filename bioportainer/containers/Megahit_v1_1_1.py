@@ -8,6 +8,7 @@ class Megahit_v1_1_1(MultiCmdContainer):
         super().__init__(image, image_directory, sub_commands, input_allowed)
         self._change_out_err_log = True
         self.output_filter = "final.contigs.fa"
+        self.k = "99"
 
     @MultiCmdContainer.impl_set_opt_params
     def set_megahit_params(self,
@@ -33,11 +34,12 @@ class Megahit_v1_1_1(MultiCmdContainer):
         return self
 
     @MultiCmdContainer.impl_set_opt_params
-    def set_contig2fastg_params(self):
+    def set_contig2fastg_params(self, k="99"):
         """
         Usage: contig2fastg <kmer_size> <k_{kmer_size}.contigs.fa>
         :return:
         """
+        self.k = k
         return self
 
     @MultiCmdContainer.impl_run
@@ -59,8 +61,8 @@ class Megahit_v1_1_1(MultiCmdContainer):
             self.input_allowed = ["fasta-se"]
             self.output_type = "fastg"
             file = sample_io.files[0].name
-            k = [s for s in file if s.isdigit()][0]
-            self.cmd = ["megahit_toolkit", "contig2fastg", k, file, ">", os.path.splitext(file)[0] + ".fastg"]
+            self.cmd = ["megahit_toolkit", "contig2fastg", self.k, file, ">", os.path.splitext(file)[0] + ".fastg"]
+
 
     @MultiCmdContainer.impl_run_parallel
     def run_parallel(self, sample_io, subcmd="megahit"):
