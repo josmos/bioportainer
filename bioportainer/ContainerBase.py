@@ -223,10 +223,12 @@ class Container(metaclass=ABCMeta):
             if mountfiles:
                 for i, filepath in enumerate(mountfiles):
                     path, file = os.path.split(filepath)
+                    print(path, file)
                     dir_nr = dir_nr + i + 1
                     init.write("ln -s /data{}/* /data/\n".format(dir_nr))
-                    v[filepath] = {"bind": "/data{}/{}".format(dir_nr, file), "mode": "ro"}
+                    v[path] = {"bind": "/data{}/".format(dir_nr), "mode": "ro"}
 
+            init.write("ls -la /data/\n")
             init.write(" ".join(self.cmd) + "\n")
             init.write("find -type l -delete")
 
@@ -309,7 +311,7 @@ class Container(metaclass=ABCMeta):
             except KeyError:
                 subcmd = None
 
-            def ret_func(*args, subcmd=subcmd):
+            def ret_func(*args, subcmd=subcmd, **kwargs):
                 c = args[0]
                 args = [[None] * len(args[1:]) if a is None else a for a in args[1:]]
                 # make iterable of nontypes for zip if argument is None
@@ -336,6 +338,6 @@ class Container(metaclass=ABCMeta):
 
                 return cont_io
 
-            return ret_func(*args, subcmd=subcmd)
+            return ret_func(*args, subcmd=subcmd, **kwargs)
 
         return wrapper

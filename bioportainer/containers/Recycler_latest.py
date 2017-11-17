@@ -70,11 +70,12 @@ optional arguments:
         if subcmd == "recycle":
             k = ["-k", k]
             bam = ["-b", bam_io.files[0].name]
-            self.cmd = [subcmd + ".py", "-o", self.out_dir] + graph + k + bam + self.get_opt_params("recycle_params") + ["-o", "/data/"]
+            self.cmd = [subcmd + ".py", "-o", "/data/"] + graph + k + bam + self.get_opt_params(
+                "recycle_params")
             self.output_type = "fasta-se"
 
         elif subcmd == "get_simple_cycs":
-            self.cmd = [subcmd + ".py"]
+            self.cmd = [subcmd + ".py", "-i", graph] + self.get_opt_params("get_simple_cycs_params")
 
         elif subcmd == "make_fasta_from_fastg":
             self.cmd = [subcmd + ".py"] + graph

@@ -214,24 +214,22 @@ class Bowtie2(MultiCmdContainer):
         return self
 
     @MultiCmdContainer.impl_run
-    def run(self, paired_io, ref_io, unpaired_io, subcmd="bowtie2"):
+    def run(self, paired_io, ref_io, unpaired_io, subcmd="bowtie2", output_postfix=""):
         """
         :param sampleIO: input object with input files
         :param subcmd: "bowtie2" or "bowtie2-build" or "bowtie2-inspect"
         :return: sampleIO object with output files
         """
         if subcmd == "bowtie2":
-            #self.index_prefix = os.path.splitext(os.path.basename(ref_io.files[0].name))[0]
             self.output_type = "sam"
+            out = paired_io.id + output_postfix + ".sam"
             if paired_io:
-                out = paired_io.id + ".sam"
                 self.input_allowed = ["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz"]
                 input = ["-1", paired_io.files[0].name, "-2", paired_io.files[1].name]
                 if unpaired_io is not None:  # and unpaired_io.io_type == "fastq-pe" or "fastq-pe-gz":
                     input += ["-U", ",".join([f.name for f in unpaired_io.files])]
 
             elif unpaired_io and unpaired_io.io_type == "fastq-se" or "fastq-se-gz":
-                out = unpaired_io.id + ".sam"
                 input = ["-U", ",".join([f.name for f in unpaired_io.files])]
             else:
                 raise IOError
@@ -253,7 +251,7 @@ class Bowtie2(MultiCmdContainer):
             self.cmd = [subcmd] + self.get_opt_params("bowtie2_inspect_params") + [self.index_prefix]
 
     @MultiCmdContainer.impl_run_parallel
-    def run_parallel(self, paired_io, ref_io, unpaired_io, subcmd="bowtie2"):
+    def run_parallel(self, paired_io, ref_io, unpaired_io, subcmd="bowtie2", output_postfix=""):
         pass
 
 

@@ -34,9 +34,10 @@ class Prodigal_v2_6_3(SingleCmdContainer):
         return self
 
     @SingleCmdContainer.impl_run
-    def run(self, sample_io, mount=("/home/josmos/pycharmprojects/bioportainer-dev/README.md",)):
+    def run(self, sample_io):
         fbn = os.path.splitext(sample_io.files[0].name)[0]
         opt_out_files = []
+        out_file = fbn + ".gbk"
         if self.opt_params["a"]:
             opt_out_files += ["-a", fbn + ".prot.fa"]
         if self.opt_params["d"]:
@@ -44,18 +45,16 @@ class Prodigal_v2_6_3(SingleCmdContainer):
         if self.opt_params["s"]:
             opt_out_files += ["-s", fbn + ".starts"]
         if self.opt_params["f"] == "gff":
-            self.output_type = "gff"
+            out_file = fbn + ".gff"
         elif self.opt_params["f"] == "sqn":
-            self.output_type = "sqn"
+            out_file = fbn + ".sqn"
         elif self.opt_params["f"] == "sco":
-            self.output_type = "sco"
-        out_file = fbn + "." + self.output_type
+            out_file = fbn + ".sco"
 
         self.cmd = ["prodigal", "-i", sample_io.files[0].name, "-o", out_file] + opt_out_files + self.get_opt_params()
-        print(self.cmd)
 
     @SingleCmdContainer.impl_run_parallel
-    def run_parallel(self, sample_io, mount=("/home/josmos/pycharmprojects/bioportainer-dev/README.md",)):
+    def run_parallel(self, sample_io):
         pass
 
 

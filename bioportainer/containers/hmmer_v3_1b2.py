@@ -1,4 +1,5 @@
 from bioportainer.MultiCmdContainer import MultiCmdContainer
+import os
 
 
 class Hmmer_v3_1b2(MultiCmdContainer):
@@ -86,12 +87,12 @@ Other expert options:
     @MultiCmdContainer.impl_run
     def run(self, sample_io, mount=("path/to/hmmdb",), subcmd="hmmscan"):
         if subcmd == "hmmscan":
-            hmmdb = mount[0]
+            hmmdb = os.path.split(mount[0])[1]
             seqfile = sample_io.files[0].name
-            self.cmd = ["hmmscan", "-h"] + self.get_opt_params("hmmscan_params") + [hmmdb, seqfile]
+            self.cmd = ["hmmscan"] + self.get_opt_params("hmmscan_params") + [hmmdb, seqfile]
 
         if subcmd == "hmmpress":
-            self.cmd = ["hmmpress","-h"]
+            self.cmd = ["hmmpress", "-h"]
 
     @MultiCmdContainer.impl_run_parallel
     def run_parallel(self, sample_io, subcmd="hmmalign"):

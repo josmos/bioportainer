@@ -27,7 +27,7 @@ class Samtools_v1_3_1(MultiCmdContainer):
             if k == "threads":
                 k = "@"
             if v == "threads":
-                v = config.contaner_threads
+                v = str(config.container_threads)
             if k == "_1":
                 k = "1"
             if type(v) == bool and v is True:

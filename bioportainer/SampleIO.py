@@ -110,7 +110,7 @@ class SampleIO:
                     if check:
                         if logger:
                             logger.info("cmd: {}\nOutput files found, skip run for sample {}"
-                                        "\n".format(" ".join(cmd), self.id),
+                                        "hash value: {}\n".format(" ".join(cmd), self.id, cmd_hash),
                                         extra={'name_override': logger_name_override})
                         return obj
                 # else None
@@ -187,23 +187,21 @@ class SampleIO:
                     outfiles.append(p)
 
         out_files = []
-        if not d["type"]:
-            return None
-        else:
-            extensions = cls.get_extensions(d["type"])
-            for path, dirs, files in os.walk(out_dir):
-                for f in files:
-                    p = os.path.join(path, f)
-                    if extensions:
-                        for ext in extensions:
-                            if f.endswith(ext):
-                               add(p, f, out_files)
-                    else:
-                        add(p, f, out_files)
 
-            d.update({"files": out_files})
+        extensions = cls.get_extensions(d["type"])
+        for path, dirs, files in os.walk(out_dir):
+            for f in files:
+                p = os.path.join(path, f)
+                if extensions:
+                    for ext in extensions:
+                        if f.endswith(ext):
+                           add(p, f, out_files)
+                else:
+                    add(p, f, out_files)
 
-            return cls(d, hostdir=out_dir, input_files=input_files)
+        d.update({"files": out_files})
+
+        return cls(d, hostdir=out_dir, input_files=input_files)
 
     @classmethod
     def from_configfile(cls, yaml_dict):
@@ -238,46 +236,49 @@ class SampleIO:
         if file_type in ["fasta-pe", "fasta-se", "fasta-inter"]:
             return [".fa", ".fasta"]
 
-        if file_type in ["fasta-pe-gz", "fasta-se-gz", "fasta-inter-gz"]:
+        elif file_type in ["fasta-pe-gz", "fasta-se-gz", "fasta-inter-gz"]:
             return [".fa.gz", ".fasta.gz"]
 
-        if file_type in ["fasta-pe-bz", "fasta-se-bz", "fasta-inter-bz"]:
+        elif file_type in ["fasta-pe-bz", "fasta-se-bz", "fasta-inter-bz"]:
             return [".fa.bz2", ".fasta.bz2"]
 
-        if file_type in ["fastq-pe", "fastq-se", "fastq-inter"]:
+        elif file_type in ["fastq-pe", "fastq-se", "fastq-inter"]:
             return [".fq", ".fastq"]
 
-        if file_type in ["fastq-pe-gz", "fastq-se-gz", "fastq-inter-gz"]:
+        elif file_type in ["fastq-pe-gz", "fastq-se-gz", "fastq-inter-gz"]:
             return [".fq.gz", ".fastq.gz"]
 
-        if file_type in ["fastq-pe-bz", "fastq-se-bz", "fastq-inter-bz"]:
+        elif file_type in ["fastq-pe-bz", "fastq-se-bz", "fastq-inter-bz"]:
             return [".fq.bz2", ".fastq.bz2"]
 
-        if file_type == "html":
+        elif file_type == "html":
             return [".html"]
 
-        if file_type == "bt2":
+        elif file_type == "bt2":
             return [".bt2"]
 
-        if file_type == "sam":
+        elif file_type == "sam":
             return [".sam"]
 
-        if file_type == "bam":
+        elif file_type == "bam":
             return [".bam"]
 
-        if file_type == "bai":
+        elif file_type == "bai":
             return [".bam.bai"]
 
-        if file_type == "fastg":
+        elif file_type == "fastg":
             return [".fastg"]
 
-        if file_type == "gbk":
+        elif file_type == "gbk":
             return [".gbk", ".genebank"]
-        if file_type == "gff":
+
+        elif file_type == "gff":
             return [".gff"]
-        if file_type == "sqn":
+
+        elif file_type == "sqn":
             return [".sqn"]
-        if file_type == "sco":
+
+        elif file_type == "sco":
             return [".sco"]
 
         else:

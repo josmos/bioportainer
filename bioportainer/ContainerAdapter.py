@@ -46,7 +46,7 @@ class ContainerAdapter():
         self.prodigal_v2_6_3 = bioportainer.containers.Prodigal_v2_6_3.Prodigal_v2_6_3(
             "biocontainers/prodigal:2.6.3", "containers/dockerfiles/prodigal_v2_6_3",
             input_allowed=["fasta-se", "genebank"],
-            output_type="gbk")
+            output_type=None)
 
         self.recycler_latest = bioportainer.containers.Recycler_latest.Recycler_latest(
             "customcontainers/recycler:latest", "containers/dockerfiles/recycler_latest",
