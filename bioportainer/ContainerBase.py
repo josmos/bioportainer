@@ -228,7 +228,6 @@ class Container(metaclass=ABCMeta):
                     init.write("ln -s /data{}/* /data/\n".format(dir_nr))
                     v[path] = {"bind": "/data{}/".format(dir_nr), "mode": "ro"}
 
-            init.write("ls -la /data/\n")
             init.write(" ".join(self.cmd) + "\n")
             init.write("find -type l -delete")
 

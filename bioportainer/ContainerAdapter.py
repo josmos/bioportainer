@@ -10,6 +10,7 @@ import bioportainer.containers.Trimmomatic_v0_36
 import bioportainer.containers.hmmer_v3_1b2
 import bioportainer.containers.spades_v3_11_0
 import bioportainer.containers.Hisat_v2_1_0
+import bioportainer.containers.srst2_v0_2_0
 
 
 class ContainerAdapter():
@@ -66,8 +67,13 @@ class ContainerAdapter():
             "customcontainers/spades:3.11.0", "containers/dockerfiles/spades_v3_11_0",
             ["metaspades"], input_allowed=["fastq-pe", "fastq_inter"])
 
-        self.hisat_v2_1_0 = bioportainer.containers.Hisat_v2_1_0.Hisat_v2_1_0("customcontainers/hisat:2.1.0",
+        self.hisat_v2_1_0 = bioportainer.containers.Hisat_v2_1_0.Hisat_v2_1_0(
+            "customcontainers/hisat:2.1.0",
             "containers/dockerfiles/hisat_v2_1_0",
             ["hisat2", "hisat2-inspect", "hisat2-build"],
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz",
                            "fasta-se", "bt2"])
+
+        self.srst2_v0_2_0 = bioportainer.containers.srst2_v0_2_0.Srst2_v0_2_0("srst2:0.2.0",
+            "containers/dockerfiles/srst2_v0_2_0", ["srst2", "getmlst"],
+            input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fasta-se"])

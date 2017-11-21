@@ -281,6 +281,9 @@ class SampleIO:
         elif file_type == "sco":
             return [".sco"]
 
+        elif file_type == "txt":
+            return [".txt"]
+
         else:
             return None
 
