@@ -20,9 +20,11 @@ Supported tools:
     pip3 install .
 
 Dependencies: 
-Docker (tested with Version: 17.05.0-ce; API version:  1.29)
 
-Python >= 3.4, xxhash, PyYaml, docker, psutil
+- Docker (tested with Version: 17.05.0-ce; API version:  1.29)
+
+- Python >= 3.4
+- Python modules: xxhash, PyYaml, docker, psutil
 
 ## Basic Usage:
 
@@ -132,7 +134,7 @@ The container object holds all available containers as attributes.
  Parameters:
  
  - SampleIO, one or more SampleIO object specifying the input
- - mount: tuple of file paths if single files need to be mounted to the container (e.g. a reference sequence)
+ - mount: tuple of file paths if additional files need to be mounted to the container (e.g. a reference sequence)
  - subcmd string specifying the sub command (only if a container provides more than one command)
  
 
@@ -144,9 +146,9 @@ The container object holds all available containers as attributes.
  
  Parameters:
  
- same as run (positional arguments are of type SampleList)
+ - same as run (positional arguments are of type SampleList)
+ - threads: override the number of cpus for the container specified in configfile (optional)
  
- threads:override the number of cpus for the container specified in configfile (optional)
  
  Return:
  SampleList object
@@ -232,3 +234,13 @@ follow the Biocontainer implementation guidelines.
 | sqn            	| ncbi sqn format          	| .sqn                 	|
 | bt2            	| Bowtie index             	| .bt2                 	|
 | html           	| html                     	| .html                	|
+| txt           	| text file               	| .txt                	|
+
+## Additional Container Informations
+
+### SRST2:
+
+Default gene_db or mlst_db files (ARGannot.fasta, Plasmid18Replicons.fasta, ARGannot.r1.fasta, EcOH.fasta
+PlasmidFinder.fasta LEE_mlst.fasta, ResFinder.fasta) are linked to the */data* directory and can be acessed via 
+the corresponding optional Parameter (without adding a path).
+Custom files can be added by using the *mount* parameter

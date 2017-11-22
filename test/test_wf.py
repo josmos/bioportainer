@@ -15,20 +15,18 @@ trimmed_paired = trimmed.filter_files(".*P.fq.gz")  # filter paried files from t
 trimmed_unpaired = trimmed.filter_files(".*U.fq.gz")  # filter inparied files from trimmomatic output
 
 # create SampleIO object with reference fasta file
-#refseq = SampleIO.SampleIO.from_user("refseq", "fasta-se", ["CBS7435.fa"])
+refseq = SampleIO.SampleIO.from_user("refseq", "fasta-se", ["CBS7435.fa"])
 
 # build bowtie index
-#bt_idx = container.bowtie2_v2_2_9.run(None, refseq, None, subcmd="bowtie2-build")
+bt_idx = container.bowtie2_v2_2_9.run(None, refseq, None, subcmd="bowtie2-build")
 
 # create a SampleList object of two refseqs
-#bt_idx = SampleList.SampleList.from_user(*[bt_idx] * 2)
+bt_idx = SampleList.SampleList.from_user(*[bt_idx] * 2)
 
-#bt_out = container.bowtie2_v2_2_9.set_bowtie2_params(very_fast=True, sensitive=False)\
-#   .set_input_type("fastq-pe-gz")\
-#   .run_parallel(trimmed_paired, bt_idx, trimmed_unpaired)
+bt_out = container.bowtie2_v2_2_9.set_bowtie2_params(very_fast=True, sensitive=False)\
+   .set_input_type("fastq-pe-gz")\
+   .run_parallel(trimmed_paired, bt_idx, trimmed_unpaired)
 
-#bt_idx.delete_files()
+bt_idx.delete_files()
 
 
-res_genes = container.srst2_v0_2_0.set_srst2_params(gene_db="Res.fasta")\
-    .run_parallel(trimmed_paired, input_type="fastq-se-gz", mount=("/home/josmos/pycharmprojects/bioportainer/test/dbs/Res.fasta",))
