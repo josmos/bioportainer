@@ -116,6 +116,9 @@ Both classes have a method to manually create an instance. The *SampleList* impe
     refseq = SampleIO.SampleIO.from_user("refseq", "type", ("path/to/file",))
     refseqs = SampleList.SampleList.from_user(*[refseq] * 2) 
 
+##### move(directory_name)
+
+Change the output directory name to *directory_name* e.g. if you want to run a container with multiple parameters without overwriting the results
 
 ### container Object:
 
