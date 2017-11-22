@@ -185,7 +185,7 @@ optional arguments:
         return self
 
     @MultiCmdContainer.impl_run
-    def run(self, sample_io, subcmd="srst2", output_postfix="", input_type="fastq-pe"):
+    def run(self, sample_io, subcmd="srst2", output_postfix="", input_type="fastq-pe", mount=None):
         self.input_type = input_type
         if subcmd == "srst2":
             self.output_type = "txt"
@@ -207,5 +207,5 @@ optional arguments:
             self.cmd = [subcmd + ".py"] + self.get_opt_params("getmlst_params")
 
     @MultiCmdContainer.impl_run_parallel
-    def run_parallel(self, sample_io, subcmd="srst2", output_postfix="", input_type="fastq-pe"):
+    def run_parallel(self, sample_io, subcmd="srst2", output_postfix="", input_type="fastq-pe", mount=None):
         pass

@@ -30,4 +30,5 @@ trimmed_unpaired = trimmed.filter_files(".*U.fq.gz")  # filter inparied files fr
 #bt_idx.delete_files()
 
 
-res_genes = container.srst2_v0_2_0.set_srst2_params(gene_db="ARGannot.r1.fasta").run_parallel(trimmed_paired, input_type="fastq-se-gz")
+res_genes = container.srst2_v0_2_0.set_srst2_params(gene_db="Res.fasta")\
+    .run_parallel(trimmed_paired, input_type="fastq-se-gz", mount=("/home/josmos/pycharmprojects/bioportainer/test/dbs/Res.fasta",))

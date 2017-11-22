@@ -18,32 +18,31 @@ USER root
 ENV ZIP=bowtie2-2.2.9-linux-x86_64.zip
 ENV URL=https://github.com/BenLangmead/bowtie2/releases/download/v2.2.9/
 ENV FOLDER=bowtie2-2.2.9
+ENV TAR=v0.2.0.tar.gz
+ENV URL2=https://github.com/katholt/srst2/archive/
+ENV FOLDER2=srst2-0.2.0
 ENV DST=/home/biodocker/bin
 
 RUN wget $URL/$ZIP -O $DST/$ZIP && \
     unzip $DST/$ZIP -d $DST && \
     rm $DST/$ZIP && \
     mv $DST/$FOLDER/* $DST && \
-    rmdir $DST/$FOLDER
-
-RUN conda install samtools=1.3.1
-
-
-ENV ZIP=v0.2.0.tar.gz
-ENV URL=https://github.com/katholt/srst2/archive/
-ENV FOLDER=srst2-0.2.0
-ENV DST=/home/biodocker/bin
-
-
-
-RUN pip install numpy scipy
-
-RUN wget $URL/$ZIP -O $DST/$ZIP && \
-    tar -xvzf $DST/$ZIP -C $DST && \
-    rm $DST/$ZIP && \
-    cd $DST/$FOLDER/ && \
+    rmdir $DST/$FOLDER && \
+    conda install samtools=1.3.1 && \
+    pip install numpy scipy && \
+    wget $URL2/$TAR -O $DST/$TAR && \
+    tar -xvzf $DST/$TAR -C $DST && \
+    rm $DST/$TAR && \
+    cd $DST/$FOLDER2/ && \
     pip install . && \
-    mv $DST/$FOLDER/data/* /data/
+    bowtie2-build $DST/$FOLDER2/data/ARGannot.r1.fasta $DST/$FOLDER2/data/ARGannot.r1.fasta  && \
+    bowtie2-build $DST/$FOLDER2/data/ARGannot.fasta $DST/$FOLDER2/data/ARGannot.fasta  && \
+    bowtie2-build $DST/$FOLDER2/data/EcOH.fasta $DST/$FOLDER2/data/EcOH.fasta  && \
+    bowtie2-build $DST/$FOLDER2/data/LEE_mlst.fasta $DST/$FOLDER2/data/LEE_mlst.fasta  && \
+    bowtie2-build $DST/$FOLDER2/data/Plasmid18Replicons.fasta $DST/$FOLDER2/data/Plasmid18Replicons.fasta  && \
+    bowtie2-build $DST/$FOLDER2/data/PlasmidFinder.fasta $DST/$FOLDER2/data/PlasmidFinder.fasta  && \
+    bowtie2-build $DST/$FOLDER2/data/ResFinder.fasta $DST/$FOLDER2/data/ResFinder.fasta && \
+    mkdir /data_db && mv $DST/$FOLDER2/data/* /data_db/
 
 USER biodocker
 
@@ -52,8 +51,6 @@ WORKDIR /data
 
 # DEFINE DEFAULT COMMAND
 CMD ["srst2"]
-
-
 
 ##################### INSTALLATION END #####################
 

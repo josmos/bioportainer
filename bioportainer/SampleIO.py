@@ -198,7 +198,6 @@ class SampleIO:
                            add(p, f, out_files)
                 else:
                     add(p, f, out_files)
-
         d.update({"files": out_files})
 
         return cls(d, hostdir=out_dir, input_files=input_files)

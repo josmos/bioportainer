@@ -213,23 +213,24 @@ class Container(metaclass=ABCMeta):
         fp = os.path.join(self.out_dir, "init.sh")  # entry script
         dir_nr = 1
         with open(fp, "w") as init:
-            init.write("#!/bin/sh\n"
-                       "ln -s /data1/* /data/\n")
             for i, arg in enumerate(others):
                 dir_nr = dir_nr + i + 1
-                init.write("ln -s /data{}/* /data/\n".format(dir_nr))
                 v[arg.host_dir] = {"bind": "/data{}/".format(dir_nr), "mode": "ro"}
 
             if mountfiles:
                 for i, filepath in enumerate(mountfiles):
                     path, file = os.path.split(filepath)
-                    print(path, file)
                     dir_nr = dir_nr + i + 1
-                    init.write("ln -s /data{}/* /data/\n".format(dir_nr))
                     v[path] = {"bind": "/data{}/".format(dir_nr), "mode": "ro"}
 
-            init.write(" ".join(self.cmd) + "\n")
-            init.write("find -type l -delete")
+            init.write("""#!/usr/bin/env bash
+for path in /data*; do
+    [ -d "${{path}}" ] || continue # if not a directory, skip
+    [ "${{path}}" != "/data" ] || continue # skip /data itself
+    ln -s ${{path}}/* /data/
+done
+{}
+find -type l -delete""".format(" ".join(self.cmd)))
 
         # set permissions for entry script:
         mode = os.stat(fp).st_mode
