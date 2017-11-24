@@ -3,6 +3,7 @@
 A python package for implementing simple workflows with Biocontainers. (https://github.com/BioContainers)
 
 Supported tools:
+- Blast v2.2.31 (blastn, blastp, makeblastdb)
 - Bowtie2 v2.2.9
 - FastQC v0.11.15
 - Hisat2 v2.1.0 (not tested)
@@ -12,6 +13,7 @@ Supported tools:
 - Recycler latest
 - Samtools v.1.3.1
 - Spades v3.11.0 (only Metaspades)
+- SRST2 v0.2.0
 - Trimmomatic v0.36
 
 ## Install:
@@ -209,7 +211,7 @@ follow the Biocontainer implementation guidelines.
 ## File types:
 
 | File Type      	| Description              	| possible extensions  	|
-|----------------	|--------------------------	|----------------------	|
+|-------------------|---------------------------|-----------------------|
 | fasta-se       	| Fasta single end         	| .fa ; .fasta         	|
 | fasta-pe       	| Fasta paired end         	| .fa ; .fasta         	|
 | fasta-inter    	| Fasta interleaved        	| .fa ; .fasta         	|
@@ -240,6 +242,11 @@ follow the Biocontainer implementation guidelines.
 | txt           	| text file               	| .txt                	|
 
 ## Additional Container Informations
+
+### Blast
+
+Note that optional parameters which require inputfiles need those files mounted with the "mount" parameter in the 
+run method.
 
 ### SRST2:
 

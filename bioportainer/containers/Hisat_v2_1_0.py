@@ -1,7 +1,5 @@
 import os
-
 from bioportainer.MultiCmdContainer import MultiCmdContainer
-
 from bioportainer.Config import config
 
 
