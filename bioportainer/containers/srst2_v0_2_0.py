@@ -191,7 +191,9 @@ optional arguments:
             self.input_allowed = ["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz"]
 
             if self.input_type in ["fastq-pe", "fastq-pe-gz"]:
-                input = ["--input_pe", sample_io.files[0].name, sample_io.files[1].name]
+                input = ["--input_pe", sample_io.files[0].name, sample_io.files[1].name,
+                         "--forward", sample_io.files[0].name.split(os.extsep, 1)[0][len(sample_io.id):],
+                         "--reverse", sample_io.files[1].name.split(os.extsep, 1)[0][len(sample_io.id):]]
 
             elif self.input_type in ["fastq-se", "fastq-se-gz"]:
                 input = ["--input_se"] + [f.name for f in sample_io.files]
