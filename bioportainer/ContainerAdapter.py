@@ -12,9 +12,16 @@ import bioportainer.containers.spades_v3_11_0
 import bioportainer.containers.Hisat_v2_1_0
 import bioportainer.containers.srst2_v0_2_0
 import bioportainer.containers.blast_v2_2_31
+import bioportainer.containers.cd_hit_v4_6_8
+
 
 class ContainerAdapter():
     def __init__(self):
+        self.cd_hit_v4_6_8 = bioportainer.containers.cd_hit_v4_6_8.Cd_hit_v4_6_8(
+            "cd-hit:4.6.8", None, sub_commands=["cd-hit-est"],
+            input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fastq-inter",
+                           "fastq-inter-gz", "fasta-pe", "fasta-pe-gz", "fasta-se", "fasta-se-gz",
+                           "fasta-inter", "fasta-inter-gz"])
         self.blast_v2_2_31 = bioportainer.containers.blast_v2_2_31.Blast_v2_2_31(
             "biocontainers/blast:2.2.31", None, sub_commands=["blastn", "blastp", "makeblastdb"],
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fastq-inter",

@@ -283,6 +283,9 @@ class SampleIO:
         elif file_type == "txt":
             return [".txt"]
 
+        elif file_type == "out":
+            return [".out"]
+
         else:
             return None
 

@@ -1,6 +1,4 @@
-from bioportainer.Config import config
 from bioportainer.MultiCmdContainer import MultiCmdContainer
-import psutil
 
 
 class Spades_v3_11_0(MultiCmdContainer):
@@ -10,9 +8,8 @@ class Spades_v3_11_0(MultiCmdContainer):
 
     @MultiCmdContainer.impl_set_opt_params
     def set_metaspades_params(self, only_error_correction=False, only_assembler=False, irontorrent=False,
-                              disable_gzip_output=False, disable_rr=False, t=config.container_threads,
-                              memory="{:.0f}".format(int((psutil.virtual_memory().available / 1024 **3) / config.threads)),
-                              phred_offset=False, k=False):
+                              disable_gzip_output=False, disable_rr=False, t="threads",
+                              memory="max_avaliable_g", phred_offset=False, k=False):
         """SPAdes genome assembler v3.11.0 [metaSPAdes mode]
 
 Usage: /home/biodocker/SPAdes-3.11.0-Linux/bin/metaspades.py [options] -o <output_dir>

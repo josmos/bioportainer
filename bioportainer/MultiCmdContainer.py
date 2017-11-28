@@ -1,5 +1,5 @@
 import bioportainer.ContainerBase as Cont
-
+import psutil
 from bioportainer.Config import config
 from inspect import signature
 
@@ -37,6 +37,12 @@ class MultiCmdContainer(Cont.Container):
         for k, v in p.items():
             if v == "threads":
                 v = str(config.container_threads)
+            if v == "max_availiable_g":
+                v = "{:.0f}".format(
+                int((psutil.virtual_memory().available / 1024 ** 3) / config.threads))
+            if v == "max_availiable_m":
+                v = "{:.0f}".format(
+                int((psutil.virtual_memory().available / 1024 ** 2) / config.threads))
             if type(v) == bool and v is True:
                 l += ["--" + k.replace("_", "-")]
             elif type(v) == bool and v is False:

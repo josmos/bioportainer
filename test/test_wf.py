@@ -17,7 +17,7 @@ input = config.load_configfile(configfile="test_config.yaml")
 # trimmed_unpaired = trimmed.filter_files(".*U.fq.gz")  # filter inparied files from trimmomatic output
 
 # create SampleIO object with reference fasta file
-refseq = SampleIO.SampleIO.from_user("refseq", "fasta-se", ["CBS7435.fa"])
+#refseq = SampleIO.SampleIO.from_user("refseq", "fasta-se", ["CBS7435.fa"])
 # #
 # build bowtie index
 # bt_idx = container.bowtie2_v2_2_9.run(None, refseq, None, subcmd="bowtie2-build")
@@ -31,10 +31,12 @@ refseq = SampleIO.SampleIO.from_user("refseq", "fasta-se", ["CBS7435.fa"])
 #
 # bt_idx.delete_files()
 #
-blast_db = "/home/josmos/pycharmprojects/bioportainer/test/blast_db/NCBI_plasmid_db.fna"
+#blast_db = "/home/josmos/pycharmprojects/bioportainer/test/blast_db/NCBI_plasmid_db.fna"
 
 #blast_db = container.blast_v2_2_31.set_makeblastdb_params(parse_seqids=True).run(blast_db_fa, subcmd="makeblastdb")
 
-blast_out = container.blast_v2_2_31\
-    .set_blastn_params(outfmt="'6 qseqid sacc stitle pident length mismatch gapopen qstart qend sstart send evalue bitscore'") \
-    .run(refseq, subcmd="blastn", mount=(blast_db,))
+#blast_out = container.blast_v2_2_31\
+#    .set_blastn_params(outfmt="'6 qseqid sacc stitle pident length mismatch gapopen qstart qend sstart send evalue bitscore'") \
+#    .run(refseq, subcmd="blastn", mount=(blast_db,))
+
+
