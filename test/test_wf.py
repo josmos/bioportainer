@@ -9,13 +9,14 @@ input = config.load_configfile(configfile="test_config.yaml")
 # fqc_io = container.fastqc_v0_11_15.run_parallel(input)
 #
 #
-# trimmed = container.trimmomatic_v0_36.set_input_type("fastq-pe-gz")\
-#     .set_opt_params(leading="10", trailing="10", slidingwindow="4:20", minlen="250")\
-#     .run_parallel(input)
+trimmed = container.trimmomatic_v0_36.set_input_type("fastq-pe-gz")\
+    .set_opt_params(leading="10", trailing="10", slidingwindow="4:20", minlen="250")\
+    .run_parallel(input)
 #
-# trimmed_paired = trimmed.filter_files(".*P.fq.gz")  # filter paried files from trimmomatic output
-# trimmed_unpaired = trimmed.filter_files(".*U.fq.gz")  # filter inparied files from trimmomatic output
+trimmed_paired = trimmed.filter_files(".*P.fq.gz")  # filter paried files from trimmomatic output
+trimmed_unpaired = trimmed.filter_files(".*U.fq.gz")  # filter inparied files from trimmomatic output
 
+mh_out = container.megahit_v1_1_2.set_megahit_params(keep_tmp_files=True).run_parallel(trimmed_paired)
 # create SampleIO object with reference fasta file
 #refseq = SampleIO.SampleIO.from_user("refseq", "fasta-se", ["CBS7435.fa"])
 # #

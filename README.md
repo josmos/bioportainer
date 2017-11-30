@@ -5,7 +5,7 @@ A python package for implementing simple workflows with Biocontainers. (https://
 Supported tools:
 - Blast v2.2.31 (blastn, blastp, makeblastdb)
 - Bowtie2 v2.2.9
-c CD-hit v4.6.8 (only cd-hit-est) not tested!
+- CD-Hit v4.6.8 (only cd-hit-est) not tested!
 - FastQC v0.11.15
 - Hisat2 v2.1.0 (not tested)
 - Hmmer v3.1b2

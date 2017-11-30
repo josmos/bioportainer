@@ -230,7 +230,14 @@ for path in /data*; do
     ln -s ${{path}}/* /data/
 done
 {}
-find -type l -delete""".format(" ".join(self.cmd)))
+busybox &>/dev/null
+retVal=$?
+if [ $retVal -eq 0 ]; then
+    find /data/. -type l -exec rm {{}} +
+else
+    find -type l -delete
+fi
+""".format(" ".join(self.cmd)))
 
         # set permissions for entry script:
         mode = os.stat(fp).st_mode
@@ -275,7 +282,7 @@ find -type l -delete""".format(" ".join(self.cmd)))
                 v = c.make_volumes(sample_io, others, mountfiles)
                 name = uuid.uuid4()
                 log = cnf.client.containers.run(c.image, user=os.getuid(), detach=True, name=name,
-                                                volumes=v, entrypoint="./init.sh")
+                                                volumes=v, working_dir="/data/", entrypoint="./init.sh")
                 c.container_logs(log)
                 container_dict = {"id": sample_io.id, "type": c.output_type, "cmd": c.cmd}
                 os.remove(os.path.join(c.out_dir, "init.sh"))

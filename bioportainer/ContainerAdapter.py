@@ -44,14 +44,13 @@ class ContainerAdapter():
             input_allowed=[""])
 
         self.megahit_v1_1_1 = bioportainer.containers.Megahit_v1_1_1.Megahit_v1_1_1(
-            "customcontainers/megahit:1.1.1", "containers/dockerfiles/megahit_v1_1_1",
+            "quay.io/biocontainers/megahit:1.1.1--py36_0", None,
             sub_commands=["megahit", "contig2fastg"],
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fastq-inter",
                            "fastq-inter-gz"])
 
         self.megahit_v1_1_2 = bioportainer.containers.Megahit_v1_1_2.Megahit_v1_1_2(
-            "customcontainers/megahit:1.1.2",
-            "containers/dockerfiles/megahit_v1_1_2",
+            "quay.io/biocontainers/megahit:1.1.2--py36_0", None,
             sub_commands=["megahit", "contig2fastg"],
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz",
                            "fastq-inter", "fastq-inter-gz"])
