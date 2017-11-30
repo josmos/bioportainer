@@ -747,7 +747,7 @@ OPTIONAL ARGUMENTS
                            + self.get_opt_params("blastp_params")
 
         elif subcmd == "makeblastdb":
-            input_file = sample_io.files[0].name
+            input_file = os.path.split(mount[0])[1]
             self.cmd = [subcmd, "-in", input_file] + self.get_opt_params("makeblastdb_params")
 
     @MultiCmdContainer.impl_run_parallel
