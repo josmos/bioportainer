@@ -3,8 +3,10 @@
 A python package for implementing simple workflows with Biocontainers. (https://github.com/BioContainers)
 
 Supported tools:
+- BCF tools v 1.3.1 (not tested)
 - Blast v2.2.31 (blastn, blastp, makeblastdb)
 - Bowtie2 v2.2.9
+- BWA v0.7.15 (only BWA-mem, index)(not tested)
 - CD-Hit v4.6.8 (only cd-hit-est) not tested!
 - FastQC v0.11.15
 - Hisat2 v2.1.0 (not tested)
@@ -12,9 +14,11 @@ Supported tools:
 - Megahit v1.1.1 / v 1.1.2
 - Prodigal v2.6.3
 - Recycler latest
+- RGI v3.2.1 (not tested)
 - Samtools v.1.3.1
 - Spades v3.11.0 (only Metaspades)
 - SRST2 v0.2.0
+- Tabix v0.2.5 (not tested)
 - Trimmomatic v0.36
 
 ## Install:

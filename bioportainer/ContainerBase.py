@@ -122,7 +122,7 @@ class Container(metaclass=ABCMeta):
         :param val:
         :return:
         """
-        self.input_type = val
+        self.output_type = val
         return self
 
     @property
@@ -271,6 +271,7 @@ fi
             c.out_dir = os.path.join(cnf.work_dir, c.container_dir, sample_io.id)
             try:
                 mountfiles = kwargs["mount"]
+
             except KeyError:
                 mountfiles = None
 

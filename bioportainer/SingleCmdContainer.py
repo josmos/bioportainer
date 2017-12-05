@@ -22,6 +22,8 @@ class SingleCmdContainer(Cont.Container):
         """
         l = []
         for k, v in self.opt_params.items():
+            if k.startswith("_"):
+                k = k[1:]
             if v == "threads":
                 v = str(bioportainer.Config.config.container_threads)
             if type(v) == bool and v is True:

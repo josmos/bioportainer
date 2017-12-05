@@ -45,7 +45,10 @@ class Config:
             return dir
 
         if configfile:
-            configfile = yaml.load(open(configfile).read())
+            try:
+                configfile = yaml.load(open(configfile).read())
+            except TypeError:
+                configfile = yaml.load(configfile.read())
 
             cls.__instance.samples = Cio.SampleList.from_configfile(configfile)
 

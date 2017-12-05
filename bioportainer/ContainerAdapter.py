@@ -13,10 +13,27 @@ import bioportainer.containers.Hisat_v2_1_0
 import bioportainer.containers.srst2_v0_2_0
 import bioportainer.containers.blast_v2_2_31
 import bioportainer.containers.cd_hit_v4_6_8
+import bioportainer.containers.bwa_v0_7_15
+import bioportainer.containers.tabix_v0_2_5
+import bioportainer.containers.bcf_tools_v1_3_1
 
 
 class ContainerAdapter():
     def __init__(self):
+        self.bcf_tools_v1_3_1 = bioportainer.containers.bcf_tools_v1_3_1.Bcf_tools_v1_3_1(
+            "biocontainers/bcftools:1.3.1", None, sub_commands=["annotate", "call"],
+            input_allowed=["vcf", "vcf-gz" "bcf"])
+
+        self.tabix_v0_2_5 = bioportainer.containers.tabix_v0_2_5.Tabix_v0_2_5(
+            "quay.io/biocontainers/tabix:0.2.5--0", None,
+            input_allowed=["gff", "bed", "sam", "vcf", "psltbl"], output_type="")
+
+        self.bwa_v0_7_15 = bioportainer.containers.bwa_v0_7_15.Bwa_v0_7_15(
+            "biocontainers/bwa:0.7.15", None, sub_commands=["mem", "index"],
+            input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fastq-inter",
+                           "fastq-inter-gz", "fasta-pe", "fasta-pe-gz", "fasta-se", "fasta-se-gz",
+                           "fasta-inter", "fasta-inter-gz"])
+
         self.cd_hit_v4_6_8 = bioportainer.containers.cd_hit_v4_6_8.Cd_hit_v4_6_8(
             "quay.io/biocontainers/cd-hit:4.6.8", None, sub_commands=["cd-hit-est"],
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fastq-inter",
@@ -32,6 +49,7 @@ class ContainerAdapter():
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fastq-inter",
                            "fastq-inter-gz"],
             output_type="html")
+
         self.bowtie2_v2_2_9 = bioportainer.containers.Bowtie2_v2_2_9.Bowtie2(
             "biocontainers/bowtie2:2.2.9", None,
             ["bowtie2", "bowtie2-inspect", "bowtie2-build"],

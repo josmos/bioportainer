@@ -29,7 +29,9 @@ class SampleList(list):
         return cls(samples)
 
     @classmethod
-    def from_user(cls, *samples):
+    def from_user(cls, id_, type_, files, n):
+        s = Sio.SampleIO.from_user(id_, type_, files)
+        samples = [s] * n
         return cls(samples)
 
     def filter_files(self, regex):

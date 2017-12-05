@@ -29,8 +29,3 @@ class FastQC(SingleCmdContainer):
     @SingleCmdContainer.impl_run_parallel
     def run_parallel(self, sample_io):
         pass
-
-
-fastqc_v0_11_15 = FastQC("biocontainers/fastqc:0.11.15", "containers/dockerfiles/fastqc/0.11.15",
-                         input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fastq-inter", "fastq-inter-gz"],
-                         output_type="html")

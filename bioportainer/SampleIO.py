@@ -286,6 +286,29 @@ class SampleIO:
         elif file_type == "out":
             return [".out"]
 
+        elif file_type == "psltbl":
+            return [".psltbl"]
+
+        elif file_type == "bed":
+            return [".bed"]
+
+        elif file_type == "bcf":
+            return [".bcf"]
+
+        elif file_type == "bcf-bz":
+            return [".bcf.bz"]
+        elif file_type == "vcf":
+            return [".vcf"]
+
+        elif file_type == "vcf-gz":
+            return [".vcf.gz"]
+
+        elif file_type == "cram":
+            return [".cram"]
+
+        elif file_type == "mpi":
+            return [".mpi"]
+
         else:
             return None
 
