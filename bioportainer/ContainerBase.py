@@ -208,7 +208,7 @@ class Container(metaclass=ABCMeta):
     def make_volumes(self, sample_io, others, mountfiles):
         if not os.path.exists(self.out_dir):  # create output directory
             sample_io.with_lock(distutils.dir_util.mkpath(self.out_dir))
-        v = {sample_io.host_dir: {"bind": "/data1/", "mode": "rw"},
+        v = {sample_io.host_dir: {"bind": "/data1/", "mode": "ro"},
              self.out_dir: {"bind": "/data/", "mode": "rw"}}
         fp = os.path.join(self.out_dir, "init.sh")  # entry script
         dir_nr = 1

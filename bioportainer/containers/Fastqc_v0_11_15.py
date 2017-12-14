@@ -17,14 +17,15 @@ class FastQC(SingleCmdContainer):
                        contaminants=False,
                        adapters=False,
                        limits=False,
-                       kmers="7",
+                       kmers=False,
                        quiet=True,
                        dir=False):
         return self
 
     @SingleCmdContainer.impl_run
     def run(self, sample_io):
-        self.cmd = ["fastqc", "-o", self.container_sample_dir] + self.get_opt_params() + [f.name for f in sample_io.files]
+        self.cmd = ["fastqc", "-o", "/data"] + self.get_opt_params() + \
+                   [f.name for f in sample_io.files]
 
     @SingleCmdContainer.impl_run_parallel
     def run_parallel(self, sample_io):
