@@ -259,3 +259,14 @@ Default gene_db or mlst_db files (ARGannot.fasta, Plasmid18Replicons.fasta, ARGa
 PlasmidFinder.fasta LEE_mlst.fasta, ResFinder.fasta) are linked to the */data* directory and can be acessed via 
 the corresponding optional Parameter (without adding a path).
 Custom files can be added by using the *mount* parameter
+
+### Trimmomatic:
+
+ILLUMINACLIP: 
+custom: mount file in run method and set prameter string:
+<fastaWithAdaptersEtc>:<seed mismatches>:<palindrome clip threshold>:<simple clip threshold>
+Use Illumina files (NexteraPE-PE.fa, TruSeq2-PE.fa, TruSeq2-SE.fa, TruSeq3-PE-2.fa, TruSeq3-PE.fa, TruSeq3-SE.fa):
+set parameter string without file:
+<seed mismatches>:<palindrome clip threshold>:<simple clip threshold>
+avaliable files: 
+

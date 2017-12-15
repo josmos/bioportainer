@@ -109,7 +109,7 @@ class SampleIO:
 
                     if check:
                         if logger:
-                            logger.info("cmd: {}\nOutput files found, skip run for sample {}"
+                            logger.info("cmd: {}\nOutput files found, skip run for sample {} -- "
                                         "hash value: {}\n".format(" ".join(cmd), self.id, cmd_hash),
                                         extra={'name_override': logger_name_override})
                         return obj

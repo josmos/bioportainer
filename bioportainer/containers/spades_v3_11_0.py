@@ -9,7 +9,7 @@ class Spades_v3_11_0(MultiCmdContainer):
     @MultiCmdContainer.impl_set_opt_params
     def set_metaspades_params(self, only_error_correction=False, only_assembler=False, irontorrent=False,
                               disable_gzip_output=False, disable_rr=False, t="threads",
-                              memory="max_avaliable_g", phred_offset=False, k=False):
+                              memory="max_availiable_g", phred_offset=False, k=False):
         """SPAdes genome assembler v3.11.0 [metaSPAdes mode]
 
 Usage: /home/biodocker/SPAdes-3.11.0-Linux/bin/metaspades.py [options] -o <output_dir>

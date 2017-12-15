@@ -11,9 +11,12 @@ class Trimmomatic_v0_36(SingleCmdContainer):
 
     def set_opt_params(self,
                        threads="threads", phred64=False, phred33=True, trimlog=False,
-                       quiet=False, validatepairs=False, illuminaclip=None, slidingwindow=None,
-                       maxinfo=None, leading=None, trailing=None, crop=None, headcrop=None,
-                       minlen=None, avgqual=None, topphred33=None, topphred64=None):
+                       quiet=False, validatepairs=False, illuminaclip_custom=None,
+                       illuminaclip_NexteraPE=False, illuminaclip_TruSeq2PE=False,
+                       illuminaclip_TruSeq2SE=False, illuminaclip_TruSeq3PE2=False,
+                       illuminaclip_TruSeq3PE=False, illuminaclip_TruSeq3SE=False,
+                       slidingwindow=None, maxinfo=None, leading=None, trailing=None, crop=None,
+                       headcrop=None, minlen=None, avgqual=None, topphred33=None, topphred64=None):
         trim_params = []
         paramlist = []
         if threads == "threads":
@@ -29,8 +32,20 @@ class Trimmomatic_v0_36(SingleCmdContainer):
             paramlist += ["-quiet"]
         if validatepairs:
             paramlist += ["-validatePairs"]
-        if illuminaclip:
-            trim_params += ["ILLUMINACLIP:" + illuminaclip]
+        if illuminaclip_custom:
+            trim_params += ["ILLUMINACLIP:" + illuminaclip_custom]
+        if illuminaclip_NexteraPE:
+            trim_params += ["ILLUMINACLIP:/usr/local/share/trimmomatic/adapters/NexteraPE-PE.fa:" + illuminaclip_NexteraPE]
+        if illuminaclip_TruSeq2SE:
+            trim_params += ["ILLUMINACLIP:/usr/local/share/trimmomatic/adapters/TruSeq2-SE.fa:" + illuminaclip_TruSeq2SE]
+        if illuminaclip_TruSeq2PE:
+            trim_params += ["ILLUMINACLIP:/usr/local/share/trimmomatic/adapters/TruSeq2-PE.fa:" + illuminaclip_TruSeq2PE]
+        if illuminaclip_TruSeq3PE:
+            trim_params += ["ILLUMINACLIP:/usr/local/share/trimmomatic/adapters/TruSeq3-PE.fa:" + illuminaclip_TruSeq3PE]
+        if illuminaclip_TruSeq3PE2:
+            trim_params += ["ILLUMINACLIP:/usr/local/share/trimmomatic/adapters/TruSeq3-PE-2.fa:" + illuminaclip_TruSeq3PE2]
+        if illuminaclip_TruSeq3SE:
+            trim_params += ["ILLUMINACLIP:/usr/local/share/trimmomatic/adapters/TruSeq3-SE.fa:" + illuminaclip_TruSeq3SE]
         if slidingwindow:
             trim_params += ["SLIDINGWINDOW:" + slidingwindow]
         if maxinfo:
@@ -58,7 +73,7 @@ class Trimmomatic_v0_36(SingleCmdContainer):
         return self
 
     @SingleCmdContainer.impl_run
-    def run(self, sample_io):
+    def run(self, sample_io, mount=None):
         """
         Usage:
 	       PE [-version] [-threads <threads>] [-phred33|-phred64] [-trimlog <trimLogFile>] [-quiet] [-validatePairs] [-basein <inputBase> | <inputFile1> <inputFile2>] [-baseout <outputBase> | <outputFile1P> <outputFile1U> <outputFile2P> <outputFile2U>] <trimmer1>...
@@ -96,10 +111,9 @@ class Trimmomatic_v0_36(SingleCmdContainer):
         else:
             raise IOError
 
-        self.cmd = ["java", "-jar", "/home/biodocker/Trimmomatic-0.36/trimmomatic-0.36.jar"] + \
-                   mode + self.opt_params + input + baseout + self.trim_params
+        self.cmd = ["trimmomatic"] + mode + self.opt_params + input + baseout + self.trim_params
 
     @SingleCmdContainer.impl_run_parallel
-    def run_parallel(self, sample_io):
+    def run_parallel(self, sample_io, mount=None):
         pass
 
