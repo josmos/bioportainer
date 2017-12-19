@@ -1,5 +1,6 @@
 import bioportainer.SampleIO as Sio
-
+from multiprocessing import Pool
+from functools import partial
 
 class SampleList(list):
     """
@@ -36,7 +37,7 @@ class SampleList(list):
 
     def filter_files(self, regex):
         new = [s.filter_files(regex) for s in Sio.copy.copy(self)]
-        return new
+        return self.from_container(new)
 
     def delete_files(self):
         """
@@ -52,6 +53,9 @@ class SampleList(list):
         new = [s.move(directory_name) for s in Sio.copy.copy(self)]
         return new
 
+    def parallel_apply(self, function, *args, threads=1, **kwargs):
+        filelist = Pool(threads).map(partial(function, *args, **kwargs), self)
+        return self.from_container(filelist)
 
 ContainerIO = SampleList
 

@@ -722,10 +722,10 @@ OPTIONAL ARGUMENTS
         return self
 
     @MultiCmdContainer.impl_run
-    def run(self, sample_io, subcmd="blastn", mount=None):
+    def run(self, sample_io, subcmd="blastn", mount=("path/to/db",), out_postfix=""):
         if subcmd == "blastn":
-            of = sample_io.id + "_" + subcmd + ".txt"
-            if not mount:
+            of = sample_io.id + "_" + subcmd + "_" + out_postfix + ".txt"
+            if mount == ("path/to/db",):
                 raise IOError("No db specified")
 
             else:
@@ -735,7 +735,7 @@ OPTIONAL ARGUMENTS
                        + self.get_opt_params("blastn_params")
 
         elif subcmd == "blastp":
-            of = sample_io.id + "_" + subcmd + ".txt"
+            of = sample_io.id + "_" + subcmd + "_" + out_postfix + ".txt"
             if subcmd == "blastn":
                 if not mount:
                     raise IOError("No db specified")
@@ -751,7 +751,7 @@ OPTIONAL ARGUMENTS
             self.cmd = [subcmd, "-in", input_file] + self.get_opt_params("makeblastdb_params")
 
     @MultiCmdContainer.impl_run_parallel
-    def run_parallel(self, sample_io, subcmd="blastn", mount=None):
+    def run_parallel(self, sample_io, subcmd="blastn", mount=("path/to/db",), out_postfix=""):
         pass
 
 

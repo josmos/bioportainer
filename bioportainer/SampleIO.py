@@ -225,6 +225,22 @@ class SampleIO:
 
         return cls(d, hostdir=os.path.split(files[0])[0])
 
+    @classmethod
+    def from_func(cls, id_, type_, files):
+        """
+        Init method for user input
+        :param id_: Sample id
+        :param type_: Sample type
+        :param files: list of input files
+        :return: SampleIO instance
+        """
+        d = {"id": id_, "type": type_, "files": files}
+        print(files)
+        print(files[0])
+        print(os.path.split(files[0])[0])
+
+        return cls(d, hostdir=os.path.split(files[0])[0])
+
     @staticmethod
     def get_extensions(file_type):
         """
@@ -336,3 +352,9 @@ class SampleIO:
             Conf.config.logger.info("File {} moved from {} to {} ".format(file.name, self.host_dir, new_dir),
                                     extra={'name_override': self.id})
         self._host_dir = new_dir
+
+    def apply(self, function, *args, **kwargs):
+        for file in self.files:
+            files = function(file.file_path, *args, **kwargs)
+
+            return self.from_func(self.id, self.io_type, files)

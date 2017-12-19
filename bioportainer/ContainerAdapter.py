@@ -72,7 +72,7 @@ class ContainerAdapter():
                            "fastq-inter", "fastq-inter-gz"])
 
         self.prodigal_v2_6_3 = bioportainer.containers.Prodigal_v2_6_3.Prodigal_v2_6_3(
-            "quay.io/biocontainers/prodigal/prodigal:2.6.3--O", None,
+            "quay.io/biocontainers/prodigal:2.6.3--0", None,
             input_allowed=["fasta-se", "genebank"],
             output_type=None)
 
