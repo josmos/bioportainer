@@ -53,8 +53,11 @@ class SampleList(list):
         new = [s.move(directory_name) for s in Sio.copy.copy(self)]
         return new
 
-    def parallel_apply(self, function, *args, threads=1, **kwargs):
-        filelist = Pool(threads).map(partial(function, *args, **kwargs), self)
+    def parallel_apply(self, function, *args, **kwargs):
+        filelist = []
+        for sample in self:
+            out = sample.apply(partial(function, *args, **kwargs))
+            filelist.append(out)
         return self.from_container(filelist)
 
 ContainerIO = SampleList
