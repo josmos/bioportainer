@@ -86,7 +86,7 @@ Options:
         self.input_type = input_type
         if subcmd == "kraken":
             self.output_type = "txt"
-            out = sample_io.id + output_postfix
+            out = sample_io.id + output_postfix + ".txt"
             self.input_allowed = ["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz"]
 
             if self.input_type == "fastq-pe":
@@ -104,8 +104,14 @@ Options:
             else:
                 raise IOError
 
-            self.cmd = [subcmd, "--db", db, "--output", out] + self.get_opt_params("kraken_params") + input
+            self.cmd = [subcmd, "--db", db, "--output", out] + self.get_opt_params("kraken_params") + input + [">", out]
 
+        if subcmd == "kraken-report":
+            self.output_type = "txt"
+            out = sample_io.id + output_postfix + "report.txt"
+            input = [f.name for f in sample_io.files]
+            self.cmd = [subcmd, "--db", db] + self.get_opt_params("kraken_report_params") + input + [">", out]
+            
     @MultiCmdContainer.impl_run_parallel
     def run_parallel(self, sample_io, subcmd="kraken", output_postfix="", input_type="fastq-pe", mount=None):
         pass
