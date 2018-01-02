@@ -111,7 +111,7 @@ Options:
             out = sample_io.id + output_postfix + "report.txt"
             input = [f.name for f in sample_io.files]
             self.cmd = [subcmd, "--db", db] + self.get_opt_params("kraken_report_params") + input + [">", out]
-            
+
     @MultiCmdContainer.impl_run_parallel
     def run_parallel(self, sample_io, subcmd="kraken", output_postfix="", input_type="fastq-pe", mount=None):
         pass

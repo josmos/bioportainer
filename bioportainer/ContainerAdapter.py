@@ -110,7 +110,7 @@ class ContainerAdapter():
             "containers/dockerfiles/srst2_v0_2_0", ["srst2", "getmlst"],
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fasta-se"])
 
-        self.srst2_v0_2_0 = bioportainer.containers.kraken_v1_0.Kraken_v1_0(
+        self.kraken_v1_0 = bioportainer.containers.kraken_v1_0.Kraken_v1_0(
             "quay.io/biocontainers/kraken:1.0--pl5.22.0_0", None, ["kraken"],
                                                                               input_allowed=[
                                                                                   "fastq-pe",
