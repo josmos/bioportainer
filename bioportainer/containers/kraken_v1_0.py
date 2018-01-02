@@ -53,11 +53,36 @@ file is a regular file, automatic format detection is attempted.
 
     @MultiCmdContainer.impl_set_opt_params
     def set_kraken_filter_params(self, threshold=False):
+        """Usage: kraken-filter [--db KRAKEN_DB_NAME] [--threshold NUM] <kraken output file(s)>"""
+        return self
 
+    @MultiCmdContainer.impl_set_opt_params
+    def set_kraken_mpa_report_params(self, show_zeros=False, header_line=False, intermediate_ranks=False):
+        """Usage: kraken-mpa-report [--db KRAKEN_DB_NAME] [options] <kraken output file(s)>
+
+Options:
+  --db NAME             Name of Kraken database
+                        (default: none)
+  --show-zeros          Display taxa even if they lack a read in any sample
+  --header-line         Display a header line indicating sample IDs
+                        (sample IDs are the filenames)
+  --intermediate-ranks  Display taxa not at the standard ranks with x__ prefix
+"""
+        return self
+
+    @MultiCmdContainer.impl_set_opt_params
+    def set_kraken_report_params(self, show_zeros=False):
+        """Usage: kraken-report [--db KRAKEN_DB_NAME] [--show-zeros] <kraken output file(s)>"""
+        return self
+
+    @MultiCmdContainer.impl_set_opt_params
+    def set_kraken_translate_params(self, mpa_format=False):
+        """Usage: kraken-translate [--db KRAKEN_DB_NAME] [--mpa-format] <kraken output file(s)>"""
         return self
 
     @MultiCmdContainer.impl_run
     def run(self, sample_io, subcmd="kraken", output_postfix="", input_type="fastq-pe", mount=None):
+        db = os.path.split(mount[0])[1]
         self.input_type = input_type
         if subcmd == "kraken":
             self.output_type = "txt"
@@ -79,9 +104,7 @@ file is a regular file, automatic format detection is attempted.
             else:
                 raise IOError
 
-            self.cmd = [subcmd, "--output", out] + self.get_opt_params("kraken_params") + input
-
-
+            self.cmd = [subcmd, "--db", db, "--output", out] + self.get_opt_params("kraken_params") + input
 
     @MultiCmdContainer.impl_run_parallel
     def run_parallel(self, sample_io, subcmd="kraken", output_postfix="", input_type="fastq-pe", mount=None):
