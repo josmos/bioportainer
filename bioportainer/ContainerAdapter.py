@@ -1,5 +1,5 @@
-import bioportainer.containers.Bowtie2_v2_2_9
-import bioportainer.containers.Fastqc_v0_11_15
+import bioportainer.containers.bowtie2_v2_2_9
+import bioportainer.containers.fastqc_v0_11_15
 import bioportainer.containers.Megahit_v1_1_1
 import bioportainer.containers.Megahit_v1_1_2
 import bioportainer.containers.Prodigal_v2_6_3
@@ -9,13 +9,14 @@ import bioportainer.containers.Samtools_v1_3_1
 import bioportainer.containers.Trimmomatic_v0_36
 import bioportainer.containers.hmmer_v3_1b2
 import bioportainer.containers.spades_v3_11_0
-import bioportainer.containers.Hisat_v2_1_0
+import bioportainer.containers.hisat_v2_1_0
 import bioportainer.containers.srst2_v0_2_0
 import bioportainer.containers.blast_v2_2_31
 import bioportainer.containers.cd_hit_v4_6_8
 import bioportainer.containers.bwa_v0_7_15
 import bioportainer.containers.tabix_v0_2_5
 import bioportainer.containers.bcf_tools_v1_3_1
+import bioportainer.containers.kraken_v1_0
 
 
 class ContainerAdapter():
@@ -44,13 +45,13 @@ class ContainerAdapter():
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fastq-inter",
                            "fastq-inter-gz"])
 
-        self.fastqc_v0_11_15 = bioportainer.containers.Fastqc_v0_11_15.FastQC(
+        self.fastqc_v0_11_15 = bioportainer.containers.fastqc_v0_11_15.FastQC(
             "biocontainers/fastqc:0.11.15", None,
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fastq-inter",
                            "fastq-inter-gz"],
             output_type="html")
 
-        self.bowtie2_v2_2_9 = bioportainer.containers.Bowtie2_v2_2_9.Bowtie2(
+        self.bowtie2_v2_2_9 = bioportainer.containers.bowtie2_v2_2_9.Bowtie2(
             "biocontainers/bowtie2:2.2.9", None,
             ["bowtie2", "bowtie2-inspect", "bowtie2-build"],
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz",
@@ -99,7 +100,7 @@ class ContainerAdapter():
             "quay.io/biocontainers/spades:3.11.0--py36_zlib1.2.8_1", None,
             ["metaspades"], input_allowed=["fastq-pe", "fastq_inter"])
 
-        self.hisat_v2_1_0 = bioportainer.containers.Hisat_v2_1_0.Hisat_v2_1_0(
+        self.hisat_v2_1_0 = bioportainer.containers.hisat_v2_1_0.Hisat_v2_1_0(
             "quay.io/biocontainers/hisat2:2.0.4--py35_0", None,
             ["hisat2", "hisat2-inspect", "hisat2-build"],
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz",
@@ -108,3 +109,15 @@ class ContainerAdapter():
         self.srst2_v0_2_0 = bioportainer.containers.srst2_v0_2_0.Srst2_v0_2_0("srst2:0.2.0",
             "containers/dockerfiles/srst2_v0_2_0", ["srst2", "getmlst"],
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fasta-se"])
+
+        self.srst2_v0_2_0 = bioportainer.containers.kraken_v1_0.Kraken_v1_0(
+            "quay.io/biocontainers/kraken:1.0--pl5.22.0_0", None, ["kraken"],
+                                                                              input_allowed=[
+                                                                                  "fastq-pe",
+                                                                                  "fastq-pe-gz",
+                                                                                  "fastq-se",
+                                                                                  "fastq-se-gz",
+                                                                                  "fasta-se-gz",
+                                                                                  "fasta-se",
+                                                                                  "fasta_pe",
+                                                                                  "fasta_pe_gz"])
