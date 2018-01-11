@@ -24,6 +24,8 @@ class Picard_v2_3_0(MultiCmdContainer):
             else:
                 l += [k + "=" + v]
 
+        return l
+
     @MultiCmdContainer.impl_set_opt_params
     def set_CollectInsertSizeMetrics_params(self, M="0.5", HISTOGRAM_FILE="insert_size_histogram.pdf",
                                             DEVIATIONS=False, HISTOGRAM_WIDTH=False, MINIMUM_PCT=False,
