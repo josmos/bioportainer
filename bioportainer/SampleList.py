@@ -2,6 +2,7 @@ import bioportainer.SampleIO as Sio
 from multiprocessing import Pool
 from functools import partial
 
+
 class SampleList(list):
     """
     List of SampleIO objects

@@ -3,6 +3,7 @@
 A python package for implementing simple workflows with Biocontainers. (https://github.com/BioContainers)
 
 Supported tools:
+- Art (only Art_illumina, not tested!)
 - BCF tools v 1.3.1 (not tested)
 - Blast v2.2.31 (blastn, blastp, makeblastdb)
 - Bowtie2 v2.2.9

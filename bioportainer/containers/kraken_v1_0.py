@@ -8,11 +8,10 @@ class Kraken_v1_0(MultiCmdContainer):
         super().__init__(image, image_directory, sub_commands, input_allowed)
         self.set_kraken_params()
         #self.set_kraken_build_params()
-        #self.set_kraken_filter_params()
-        #self.set_kraken_mpa_report_params()
-        #self.set_kraken_report_params()
-        #self.set_kraken_translate_params()
-
+        self.set_kraken_filter_params()
+        self.set_kraken_mpa_report_params()
+        self.set_kraken_report_params()
+        self.set_kraken_translate_params()
 
     @MultiCmdContainer.impl_set_opt_params
     def set_kraken_params(self,threads="threads", quick=False, min_hits=False,

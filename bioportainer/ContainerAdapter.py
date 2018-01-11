@@ -17,6 +17,7 @@ import bioportainer.containers.bwa_v0_7_15
 import bioportainer.containers.tabix_v0_2_5
 import bioportainer.containers.bcf_tools_v1_3_1
 import bioportainer.containers.kraken_v1_0
+import bioportainer.containers.art_2016_06_05
 
 
 class ContainerAdapter():
@@ -121,3 +122,7 @@ class ContainerAdapter():
                                                                                   "fasta-se",
                                                                                   "fasta_pe",
                                                                                   "fasta_pe_gz"])
+
+        self.art_2016_06_05 = bioportainer.containers.art_2016_06_05.Art_2016_06_05(
+            "quay.io/biocontainers/art:2016.06.05--gsl1.16_0",None, ["art_illumina"],
+            input_allowed = ["fastq-pe"])
