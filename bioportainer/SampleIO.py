@@ -354,7 +354,11 @@ class SampleIO:
         self._host_dir = new_dir
 
     def apply(self, function, *args, **kwargs):
+        out = []
         for file in self.files:
-            files = function(file.file_path, *args, **kwargs)
+            out.append(function(file.file_path, *args, **kwargs))
 
-            return self.from_func(self.id, self.io_type, files)
+        try:
+            return self.from_func(self.id, self.io_type, out)
+        except FileNotFoundError:
+            return out
