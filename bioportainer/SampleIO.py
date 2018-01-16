@@ -235,9 +235,6 @@ class SampleIO:
         :return: SampleIO instance
         """
         d = {"id": id_, "type": type_, "files": files}
-        print(files)
-        print(files[0])
-        print(os.path.split(files[0])[0])
 
         return cls(d, hostdir=os.path.split(files[0])[0])
 
