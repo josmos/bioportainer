@@ -78,11 +78,16 @@ class SampleIO:
         return self._input_files
 
     def calc_hash(self, cmd, files):
-        copy_cmd = copy.copy(cmd)
-        copy_cmd.sort()
-        string = self._id + "".join(copy_cmd + [s.calc_checksum() for s in files])
-        cmd_hash = xxhash.xxh64(string, seed=1).hexdigest()
-        return cmd_hash
+        try:
+            copy_cmd = copy.copy(cmd)
+            copy_cmd.sort()
+            string = self._id + "".join(copy_cmd + [s.calc_checksum() for s in files])
+            cmd_hash = xxhash.xxh64(string, seed=1).hexdigest()
+            return cmd_hash
+
+        except TypeError:
+            print(cmd)
+            raise TypeError
 
     def create_hash(self, cmd, files):
         cmd_hash = self.calc_hash(cmd, files)
@@ -357,5 +362,5 @@ class SampleIO:
 
         try:
             return self.from_func(self.id, self.io_type, out)
-        except FileNotFoundError:
+        except AttributeError:
             return out

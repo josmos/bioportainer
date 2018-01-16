@@ -44,7 +44,7 @@ CONTACT: Weichun Huang at whduke@gmail.com
                                 delRate=False, delRate2=False, maxIndel=False, mflen=False,
                                 matepair=False, cigarM=False, maskN=False, noALN=False, paired=False,
                                 quiet=False, minQ=False, maxQ=False, qShift=False, qShift2=False,
-                                rndSeed=42, sdev=False, samout=False, sepProf=False):
+                                rndSeed="42", sdev=False, samout=False, sepProf=False):
         """    ====================ART====================
              ART_Illumina (2008-2016)
           Q Version 2.5.8 (June 6, 2016)
