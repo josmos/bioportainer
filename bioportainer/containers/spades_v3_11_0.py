@@ -1,4 +1,5 @@
 from bioportainer.MultiCmdContainer import MultiCmdContainer
+import os
 
 
 class Spades_v3_11_0(MultiCmdContainer):
@@ -56,7 +57,7 @@ Advanced options:
         return self
 
     @MultiCmdContainer.impl_run
-    def run(self, paired_io, unpaired_io, subcmd="metaspades"):
+    def run(self, paired_io, unpaired_io, subcmd="metaspades", subdir=""):
 
         if subcmd == "metaspades":
             inp = []
@@ -67,7 +68,9 @@ Advanced options:
             if unpaired_io:
                 for f in unpaired_io.files:
                     inp += ["--pe1-s", f.name]
-            out = ["-o", "/data/"]
+            if subdir != "":
+                subdir = subdir + "/"
+            out = ["-o", "/data/", subdir]
             self.cmd = [subcmd + ".py"] + self.get_opt_params("metaspades_params") + inp + out
 
     @MultiCmdContainer.impl_run_parallel

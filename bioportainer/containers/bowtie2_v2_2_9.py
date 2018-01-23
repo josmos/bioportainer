@@ -13,20 +13,20 @@ class Bowtie2(MultiCmdContainer):
         self.set_bowtie2_params()
 
     @MultiCmdContainer.impl_set_opt_params
-    def set_bowtie2_params(self, qseq=False, f=False, skip="none", upto=False, trim5="0", trim3="0",
-                           phred33=True, phred64=False, int_quals=False, end_to_end=True,
-                           very_fast=False, fast=False, sensitive=True, very_sensitive=False,
+    def set_bowtie2_params(self, qseq=False, f=False, skip="none", upto=False, trim5=False, trim3=False,
+                           phred33=False, phred64=False, int_quals=False, end_to_end=False,
+                           very_fast=False, fast=False, sensitive=False, very_sensitive=False,
                            local=False, very_fast_local=False, fast_local=False,
-                           sensitive_local=False, very_sensitive_local=False, N="0", L="22",
-                           i="S,1,1.15", n_ceil="L,0,0.15", dpad="15", gbar="4", ignore_quals=False,
-                           nofw=False, norc=False, no_1mm_upfront=False, ma="0", mp="6", np="1",
-                           rdg="5,3", rfg="5,3", score_min="L,-0.6,-0.6", k=False, all=False, D="0",
-                           R="2", minins="0", maxins="500", no_mixed=False, no_discordant=False,
+                           sensitive_local=False, very_sensitive_local=False, N=False, L=False,
+                           i=False, n_ceil=False, dpad=False, gbar=False, ignore_quals=False,
+                           nofw=False, norc=False, no_1mm_upfront=False, ma=False, mp=False, np=False,
+                           rdg=False, rfg=False, score_min=False, k=False, all=False, D=False,
+                           R=False, minins=False, maxins=False, no_mixed=False, no_discordant=False,
                            no_dovetail=False, no_contain=False, no_overlap=False, time=False,
                            un=False, al=False, un_conc=False, al_conc=False, un_gz=False,
                            quiet=False, met_file=False, met_stderr=False, met=False, no_unal=False,
                            no_head=False, no_sq=False, rg_id=False, omit_sec_seq=False,
-                           reorder=False, mm=False, qc_filter=False, seed="0",
+                           reorder=False, mm=False, qc_filter=False, seed="42",
                            non_deterministic=False, threads="threads"):
         """
         Bowtie 2 version 2.2.9 by Ben Langmead (langmea@cs.jhu.edu, www.cs.jhu.edu/~langmea)
@@ -160,7 +160,7 @@ class Bowtie2(MultiCmdContainer):
     def set_bowtie2_build_params(self, threads="threads", f=False,
                                  large_index=False, noauto=False, packed=False, bmax=False,
                                  bmaxdivn="4", dcv="1024", nodc=False, noref=False, justref=False,
-                                 offrate="5", ftabchars="10", seed=False, quiet=True):
+                                 offrate="5", ftabchars="10", seed="42", quiet=True):
         """
         bowtie2-build [options]* <reference_in> <bt2_index_base>
             reference_in            comma-separated list of files with ref sequences

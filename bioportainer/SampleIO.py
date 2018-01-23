@@ -7,11 +7,13 @@ import pickle
 import re
 import xxhash
 import bioportainer.Config
+from inspect import stack
 
 
 class SampleFile:
-    def __init__(self, path, host_dir):
+    def __init__(self, path, host_dir, id):
         path = path if path.startswith("/") else os.path.abspath(path)
+        self._id = id
         self._name = self.set_name(path, host_dir)
         self._file_path = path
         self._checksum = self.calc_checksum()
@@ -19,6 +21,10 @@ class SampleFile:
     @staticmethod
     def set_name(path, host_dir):
         return path[len(host_dir) + 1:]
+
+    @property
+    def id(self):
+        return self._id
 
     @property
     def name(self):
@@ -61,7 +67,7 @@ class SampleIO:
         self._id = input_dict["id"]
         self._io_type = input_dict["type"]
         self._host_dir = hostdir
-        self._files = sorted([SampleFile(p, self._host_dir) for p in input_dict["files"]],
+        self._files = sorted([SampleFile(p, self._host_dir, self.id) for p in input_dict["files"]],
                              key=operator.attrgetter('name'))
         self._input_files = input_files
         if input_files:  # files of pre-step for comparison with pickled objects
@@ -86,7 +92,6 @@ class SampleIO:
             return cmd_hash
 
         except TypeError:
-            print(cmd)
             raise TypeError
 
     def create_hash(self, cmd, files):
@@ -356,10 +361,10 @@ class SampleIO:
         self._host_dir = new_dir
 
     def apply(self, function, *args, **kwargs):
-        out = []
-        for file in self.files:
-            out.append(function(file.file_path, *args, **kwargs))
-
+        if stack()[1][3] == "parallel_apply":
+            out = function(*args, **kwargs)
+        else:
+            out = function(self, *args, **kwargs)
         try:
             return self.from_func(self.id, self.io_type, out)
         except AttributeError:

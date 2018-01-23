@@ -186,6 +186,17 @@ The container object holds all available containers as attributes.
  
  add a regex in addition to the output_type to filter the output files
  
+##### # apply() and parallel_apply()
+
+map a function on a SampleIO or SampleFile object.
+the mapped function must take a SampleIO object as first argument.
+call the function as follows:
+    
+    def func(sample, *args, **kwargs)
+        do_something with sample ...
+    
+    sampleIOobj.apply(func, *args, **kwargs)
+    sampleListobj.parallel_apply(func, *args, **kwargs)
  
 # Caching
  

@@ -1,5 +1,6 @@
 import bioportainer.SampleIO as Sio
-from multiprocessing import Pool
+from multiprocessing import Pool, Manager
+import bioportainer.Config
 from functools import partial
 
 
@@ -55,11 +56,38 @@ class SampleList(list):
         return new
 
     def parallel_apply(self, function, *args, **kwargs):
+        def callback(sample, out):
+            if out:
+                result = Sio.SampleIO.from_func(sample.id, sample.io_type, out)
+                filelist.append(result)
+            else:  # if file is changed in place
+                filelist.append(sample)
+
+        try:
+            threads = kwargs["threads"]
+            del kwargs["threads"]
+        except KeyError:
+            threads = bioportainer.config.threads
+
+        pool = Pool(threads)
+        lock = Manager().Lock()
+        queue = Manager().Queue()
         filelist = []
         for sample in self:
-            out = sample.apply(partial(function, *args, **kwargs))
-            filelist.append(out)
+            try:
+                setattr(sample, "lock", lock)
+                setattr(sample, "queue", queue)
+            except AttributeError:
+                pass
+            args = [sample] + list(args)
+            pool.apply_async(partial(function, *args, **kwargs), callback=partial(callback, sample))
+            args = args[1:]  # remove sample from args before next iteration
+
+        pool.close()
+        pool.join()
+
         return self.from_container(filelist)
+
 
 ContainerIO = SampleList
 
