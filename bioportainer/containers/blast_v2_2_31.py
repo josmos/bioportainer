@@ -724,7 +724,12 @@ OPTIONAL ARGUMENTS
     @MultiCmdContainer.impl_run
     def run(self, sample_io, subcmd="blastn", mount=("path/to/db",), out_postfix=""):
         if subcmd == "blastn":
-            of = sample_io.id + "_" + subcmd + "_" + out_postfix + ".txt"
+            if self.blastn_params["outfmt"] == "5":
+                self.output_type = "xml"
+            else:
+                self.output_type = "txt"
+
+            of = sample_io.id + "_" + subcmd + "_" + out_postfix + "." + self.output_type
             if mount == ("path/to/db",):
                 raise IOError("No db specified")
 

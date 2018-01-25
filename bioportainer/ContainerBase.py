@@ -321,7 +321,8 @@ fi
 
             def ret_func(*args, subcmd=subcmd, **kwargs):
                 c = args[0]
-                args = [[None] * len(args[1:]) if a is None else a for a in args[1:]]
+                s_length = [len(arg) for arg in args[1:] if arg][0]
+                args = [[None] * s_length if a is None else a for a in args[1:]]
                 # make iterable of nontypes for zip if argument is None
                 sample_io_list = list(zip(*args))
                 pool = Pool(threads)
@@ -335,6 +336,7 @@ fi
                     except AttributeError:
                         pass
                 if subcmd:
+
                     cont_list = pool.map(partial(c.run, subcmd=subcmd, **kwargs), sample_io_list)
                 else:
                     cont_list = pool.map(partial(c.run, **kwargs), sample_io_list)

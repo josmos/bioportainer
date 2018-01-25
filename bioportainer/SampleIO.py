@@ -367,5 +367,5 @@ class SampleIO:
             out = function(self, *args, **kwargs)
         try:
             return self.from_func(self.id, self.io_type, out)
-        except AttributeError:
+        except (AttributeError, FileNotFoundError):
             return out
