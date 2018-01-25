@@ -42,7 +42,7 @@ class Megahit_v1_1_1(MultiCmdContainer):
         return self
 
     @MultiCmdContainer.impl_run
-    def run(self, sample_io, subcmd="megahit"):
+    def run(self, sample_io, subcmd="megahit", subdir=""):
         if subcmd == "megahit":
             self.output_type = "fasta-se"
             if sample_io.io_type == "fastq-pe" or "fastq-pe-gz":
@@ -54,7 +54,11 @@ class Megahit_v1_1_1(MultiCmdContainer):
             else:
                 raise IOError
 
-            self.cmd = ["megahit", "-o", "./", "-f"] + self.get_opt_params("megahit_params") + input
+            out_dir = "./"
+            if subdir != "":
+                out_dir += subdir + "/"
+
+            self.cmd = ["megahit", "-o", out_dir, "-f"] + self.get_opt_params("megahit_params") + input
 
         if subcmd == "contig2fastg":
             self.input_allowed = ["fasta-se"]
@@ -64,5 +68,5 @@ class Megahit_v1_1_1(MultiCmdContainer):
 
 
     @MultiCmdContainer.impl_run_parallel
-    def run_parallel(self, sample_io, subcmd="megahit"):
+    def run_parallel(self, sample_io, subcmd="megahit", subdir=""):
         pass

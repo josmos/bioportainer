@@ -70,11 +70,11 @@ Advanced options:
                     inp += ["--pe1-s", f.name]
             if subdir != "":
                 subdir = subdir + "/"
-            out = ["-o", "/data/", subdir]
+            out = ["-o", "/data/" + subdir]
             self.cmd = [subcmd + ".py"] + self.get_opt_params("metaspades_params") + inp + out
 
     @MultiCmdContainer.impl_run_parallel
-    def run_parallel(self, paired_io, unpaired_io, subcmd="metaspades"):
+    def run_parallel(self, paired_io, unpaired_io, subcmd="metaspades", subdir=""):
         pass
 
 
