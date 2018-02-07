@@ -219,9 +219,10 @@ class Container(metaclass=ABCMeta):
 
             if mountfiles:
                 for i, filepath in enumerate(mountfiles):
-                    path, file = os.path.split(filepath)
-                    dir_nr = dir_nr + i + 1
-                    v[path] = {"bind": "/data{}/".format(dir_nr), "mode": "ro"}
+                    if filepath:
+                        path, file = os.path.split(filepath)
+                        dir_nr = dir_nr + i + 1
+                        v[path] = {"bind": "/data{}/".format(dir_nr), "mode": "ro"}
 
             init.write("""#!/usr/bin/env bash
 for path in /data*; do
@@ -294,6 +295,50 @@ fi
                 return c, out  # return "self" if called from run parallel
             else:
                 return out
+
+        return wrapper
+
+    @staticmethod
+    def impl_run_with_list(func):
+        """
+        decorator function for "run" method
+        (overriding signature and adding context)
+        :param func: run
+        :return: wrapped func
+        """
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            cnf = Conf.config
+            args_unpacked = args
+            io_list = args[1]
+
+            sample_io, * others = [x for x in io_list if x is not None]
+
+            c = args[0]
+            c.container_sample_dir = os.path.join(c.container_dir, sample_io.id)
+            c.out_dir = os.path.join(cnf.work_dir, c.container_dir, sample_io.id)
+            try:
+                mountfiles = kwargs["mount"]
+
+            except KeyError:
+                mountfiles = None
+
+            func(*args_unpacked, **kwargs)
+
+            out = sample_io.check_cache(c.cmd, cnf.cache_dir, cnf.logger, c.image)
+            if not out:
+                c.check_image(c)
+                v = c.make_volumes(sample_io, others, mountfiles)
+                name = uuid.uuid4()
+                log = cnf.client.containers.run(c.image, user=os.getuid(), detach=True, name=name,
+                                                volumes=v, working_dir="/data/", entrypoint="./init.sh")
+                c.container_logs(log)
+                container_dict = {"id": sample_io.id, "type": c.output_type, "cmd": c.cmd}
+                os.remove(os.path.join(c.out_dir, "init.sh"))
+                out = Sio.SampleIO.from_container(container_dict, c.output_filter, c.out_dir,
+                                                  sample_io.files)
+
+            return out
 
         return wrapper
 

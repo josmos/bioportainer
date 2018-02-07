@@ -17,7 +17,7 @@ Supported tools:
 - Recycler latest
 - RGI v3.2.1 (not tested)
 - Samtools v.1.3.1
-- Spades v3.11.0 (only Metaspades)
+- Spades v3.11.0 (only for paired end input)
 - SRST2 v0.2.0
 - Tabix v0.2.5 (not tested)
 - Trimmomatic v0.36

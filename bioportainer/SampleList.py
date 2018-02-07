@@ -2,6 +2,7 @@ import bioportainer.SampleIO as Sio
 from multiprocessing import Pool, Manager
 import bioportainer.Config
 from functools import partial
+from bioportainer.CacheFunc import CacheFunc
 
 
 class SampleList(list):
@@ -80,7 +81,8 @@ class SampleList(list):
             except AttributeError:
                 pass
             args = [sample] + list(args)
-            pool.apply_async(partial(function, *args, **kwargs), callback=partial(callback, sample))
+            function = CacheFunc(function, bioportainer.Config.config.cache_dir)
+            pool.apply_async(function, args, kwargs, callback=partial(callback, sample))
             args = args[1:]  # remove sample from args before next iteration
 
         pool.close()

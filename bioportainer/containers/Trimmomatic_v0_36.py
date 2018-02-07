@@ -73,7 +73,7 @@ class Trimmomatic_v0_36(SingleCmdContainer):
         return self
 
     @SingleCmdContainer.impl_run
-    def run(self, sample_io, mount=None):
+    def run(self, sample_io, mount=None, baseout_postfix=""):
         """
         Usage:
 	       PE [-version] [-threads <threads>] [-phred33|-phred64] [-trimlog <trimLogFile>] [-quiet] [-validatePairs] [-basein <inputBase> | <inputFile1> <inputFile2>] [-baseout <outputBase> | <outputFile1P> <outputFile1U> <outputFile2P> <outputFile2U>] <trimmer1>...
@@ -94,6 +94,7 @@ class Trimmomatic_v0_36(SingleCmdContainer):
                     if baseout[-1] == "_":
                         baseout = baseout[:-1]
                     break
+            baseout += baseout_postfix
             if self.output_type == "fastq-pe":
                 baseout += ".fq"
             elif self.output_type == "fastq-pe-gz":
@@ -114,6 +115,6 @@ class Trimmomatic_v0_36(SingleCmdContainer):
         self.cmd = ["trimmomatic"] + mode + self.opt_params + input + baseout + self.trim_params
 
     @SingleCmdContainer.impl_run_parallel
-    def run_parallel(self, sample_io, mount=None):
+    def run_parallel(self, sample_io, mount=None, baseout_postfix=""):
         pass
 

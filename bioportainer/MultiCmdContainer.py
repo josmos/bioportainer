@@ -44,7 +44,10 @@ class MultiCmdContainer(Cont.Container):
                 v = "{:.0f}".format(
                 int((psutil.virtual_memory().available / 1024 ** 2) / config.threads))
             if type(v) == bool and v is True:
-                l += ["--" + k.replace("_", "-")]
+                if len(k) == 1:
+                    l += ["-" + k]
+                else:
+                    l += ["--" + k.replace("_", "-")]
             elif type(v) == bool and v is False:
                 continue
             elif len(k) == 1:

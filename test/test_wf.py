@@ -14,18 +14,20 @@ trimmed = container.trimmomatic_v0_36.set_input_type("fastq-pe-gz")\
 trimmed_paired = trimmed.filter_files(".*P.fq.gz")  # filter paried files from trimmomatic output
 trimmed_unpaired = trimmed.filter_files(".*U.fq.gz")  # filter inparied files from trimmomatic output
 
-mh_io = container.megahit_v1_1_2\
-    .set_megahit_params(k_step="12", k_min="27", k_max="99", min_count="2", min_contig_len="500", kmin_1pass=True)\
-    .set_output_filter(None).run_parallel(trimmed_paired, threads=1)
+spadesio = container.spades_v3_11_0.run_parallel(trimmed_paired,trimmed_unpaired, subcmd="spades")
 
-final = mh_io.filter_files("final.contigs.fa")
-subgraph = mh_io.filter_files(".*/k99.contigs.fa")
-
-refseq = SampleList.SampleList.from_user("refseq", "fasta-se", ["CBS7435.fa"], 2)
-
-ref_idx = container.bwa_v0_7_15.run_parallel(None, refseq, subcmd="index")
-
-bwa_sam = container.bwa_v0_7_15.run_parallel(trimmed_paired, ref_idx)
+# mh_io = container.megahit_v1_1_2\
+#     .set_megahit_params(k_step="12", k_min="27", k_max="99", min_count="2", min_contig_len="500", kmin_1pass=True)\
+#     .set_output_filter(None).run_parallel(trimmed_paired, threads=1)
+#
+# final = mh_io.filter_files("final.contigs.fa")
+# subgraph = mh_io.filter_files(".*/k99.contigs.fa")
+#
+# refseq = SampleList.SampleList.from_user("refseq", "fasta-se", ["CBS7435.fa"], 2)
+#
+# ref_idx = container.bwa_v0_7_15.run_parallel(None, refseq, subcmd="index")
+#
+# bwa_sam = container.bwa_v0_7_15.run_parallel(trimmed_paired, ref_idx)
 # build bowtie index
 #bt_idx = container.bowtie2_v2_2_9.run(None, refseq, None, subcmd="bowtie2-build")
 

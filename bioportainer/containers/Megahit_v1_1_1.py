@@ -21,6 +21,7 @@ class Megahit_v1_1_1(MultiCmdContainer):
                        bubble_level=False,
                        merge_level=False,
                        prune_level=False,
+                       prune_depth=False,
                        low_local_ratio=False,
                        max_tip_len=False,
                        no_local=False,

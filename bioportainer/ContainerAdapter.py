@@ -19,6 +19,7 @@ import bioportainer.containers.bcf_tools_v1_3_1
 import bioportainer.containers.kraken_v1_0
 import bioportainer.containers.art_2016_06_05
 import bioportainer.containers.picard_v2_3_9
+import bioportainer.containers.quast_v4_6_1
 
 
 class ContainerAdapter():
@@ -129,5 +130,9 @@ class ContainerAdapter():
             input_allowed = ["fastq-pe"])
 
         self.picard_v2_3_0 = bioportainer.containers.picard_v2_3_9.Picard_v2_3_0(
-            "quay.io/biocontainers/picard:2.9.2--py35_1", None, ["CollectInsertSizeMetrics"], input_allowed=["bam"]
-        )
+            "quay.io/biocontainers/picard:2.9.2--py35_1", None, ["CollectInsertSizeMetrics"], input_allowed=["bam"])
+
+        self.quast_v4_6_1 = bioportainer.containers.quast_v4_6_1.Quast_v4_6_1(
+            "quay.io/biocontainers/quast:4.6.1--py27_boost1.64_0", None, ["quast", "metaquast"],
+            input_allowed=["fasta_se"])
+
