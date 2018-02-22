@@ -331,7 +331,8 @@ fi
                 v = c.make_volumes(sample_io, others, mountfiles)
                 name = uuid.uuid4()
                 log = cnf.client.containers.run(c.image, user=os.getuid(), detach=True, name=name,
-                                                volumes=v, working_dir="/data/", entrypoint="./init.sh")
+                                                volumes=v, working_dir="/data/",
+                                                entrypoint="./init.sh")
                 c.container_logs(log)
                 container_dict = {"id": sample_io.id, "type": c.output_type, "cmd": c.cmd}
                 os.remove(os.path.join(c.out_dir, "init.sh"))

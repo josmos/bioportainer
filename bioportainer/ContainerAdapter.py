@@ -126,7 +126,7 @@ class ContainerAdapter():
                                                                                   "fasta_pe_gz"])
 
         self.art_2016_06_05 = bioportainer.containers.art_2016_06_05.Art_2016_06_05(
-            "quay.io/biocontainers/art:2016.06.05--gsl1.16_0",None, ["art_illumina"],
+            "quay.io/biocontainers/art:2016.06.05--gsl1.16_0", None, ["art_illumina"],
             input_allowed = ["fastq-pe"])
 
         self.picard_v2_3_0 = bioportainer.containers.picard_v2_3_9.Picard_v2_3_0(
