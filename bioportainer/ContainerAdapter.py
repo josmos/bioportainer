@@ -20,7 +20,7 @@ import bioportainer.containers.kraken_v1_0
 import bioportainer.containers.art_2016_06_05
 import bioportainer.containers.picard_v2_3_9
 import bioportainer.containers.quast_v4_6_1
-
+import bioportainer.containers.circlator_v1_5_2
 
 class ContainerAdapter():
     def __init__(self):
@@ -135,4 +135,7 @@ class ContainerAdapter():
         self.quast_v4_6_1 = bioportainer.containers.quast_v4_6_1.Quast_v4_6_1(
             "quay.io/biocontainers/quast:4.6.1--py27_boost1.64_0", None, ["quast", "metaquast"],
             input_allowed=["fasta_se"])
+
+        self.cirlator_v1_5_2 = bioportainer.containers.circlator_v1_5_2.Circlator_v1_5_2(
+            "quay.io/biocontainers/circlator:1.5.2--py35_0", None, ["minimus2"], input_allowed=["fasta_se"])
 
