@@ -21,6 +21,7 @@ import bioportainer.containers.art_2016_06_05
 import bioportainer.containers.picard_v2_3_9
 import bioportainer.containers.quast_v4_6_1
 import bioportainer.containers.circlator_v1_5_2
+import bioportainer.containers.prokka_v1_12_4
 
 class ContainerAdapter():
     def __init__(self):
@@ -51,8 +52,7 @@ class ContainerAdapter():
         self.fastqc_v0_11_15 = bioportainer.containers.fastqc_v0_11_15.FastQC(
             "biocontainers/fastqc:0.11.15", None,
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fastq-inter",
-                           "fastq-inter-gz"],
-            output_type="html")
+                           "fastq-inter-gz"], output_type="html")
 
         self.bowtie2_v2_2_9 = bioportainer.containers.bowtie2_v2_2_9.Bowtie2(
             "biocontainers/bowtie2:2.2.9", None,
@@ -114,16 +114,8 @@ class ContainerAdapter():
             input_allowed=["fastq-pe", "fastq-pe-gz", "fastq-se", "fastq-se-gz", "fasta-se"])
 
         self.kraken_v1_0 = bioportainer.containers.kraken_v1_0.Kraken_v1_0(
-            "quay.io/biocontainers/kraken:1.0--pl5.22.0_0", None, ["kraken"],
-                                                                              input_allowed=[
-                                                                                  "fastq-pe",
-                                                                                  "fastq-pe-gz",
-                                                                                  "fastq-se",
-                                                                                  "fastq-se-gz",
-                                                                                  "fasta-se-gz",
-                                                                                  "fasta-se",
-                                                                                  "fasta_pe",
-                                                                                  "fasta_pe_gz"])
+            "quay.io/biocontainers/kraken:1.0--pl5.22.0_0", None, ["kraken"], input_allowed=["fastq-pe", "fastq-pe-gz",
+            "fastq-se", "fastq-se-gz", "fasta-se-gz", "fasta-se", "fasta_pe", "fasta_pe_gz"])
 
         self.art_2016_06_05 = bioportainer.containers.art_2016_06_05.Art_2016_06_05(
             "quay.io/biocontainers/art:2016.06.05--gsl1.16_0", None, ["art_illumina"],
@@ -136,6 +128,9 @@ class ContainerAdapter():
             "quay.io/biocontainers/quast:4.6.1--py27_boost1.64_0", None, ["quast", "metaquast"],
             input_allowed=["fasta_se"])
 
-        self.cirlator_v1_5_2 = bioportainer.containers.circlator_v1_5_2.Circlator_v1_5_2(
-            "quay.io/biocontainers/circlator:1.5.2--py35_0", None, ["minimus2"], input_allowed=["fasta_se"])
+        self.circlator_v1_5_2 = bioportainer.containers.circlator_v1_5_2.Circlator_v1_5_2(
+            "customcontainers/circlator:1.5.5", "containers/dockerfiles/circlator_v1_5_5", ["minimus2"], input_allowed=["fasta_se"])
+
+        self.prokka_v1_12_4 = bioportainer.containers.prokka_v1_12_4.Prokka_v1_12_4(
+            "quay.io/biocontainers/prokka:1.12--4", None,  input_allowed=["fasta_se"], output_type="gff")
 

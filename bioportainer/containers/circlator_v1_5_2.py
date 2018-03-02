@@ -1,4 +1,6 @@
 from bioportainer.MultiCmdContainer import MultiCmdContainer
+from bioportainer.Config import config
+import psutil
 import os
 
 
@@ -6,6 +8,37 @@ class Circlator_v1_5_2(MultiCmdContainer):
     def __init__(self, image, image_directory, sub_commands, input_allowed):
         super().__init__(image, image_directory, sub_commands, input_allowed)
         self.set_minimus2_params()
+
+    def get_opt_params(self, param_attr):
+        """
+        return optional parameter dictionary as parameter-string-list
+        :param param_attr: string: "get_<sub command>_params"
+        :return: list of strings
+        """
+        p = getattr(self, param_attr)
+        l = []
+        for k, v in p.items():
+            if v == "threads":
+                v = str(config.container_threads)
+            if v == "max_availiable_g":
+                v = "{:.0f}".format(
+                    int((psutil.virtual_memory().available / 1024 ** 3) / config.threads))
+            if v == "max_availiable_m":
+                v = "{:.0f}".format(
+                    int((psutil.virtual_memory().available / 1024 ** 2) / config.threads))
+            if type(v) == bool and v is True:
+                if len(k) == 1:
+                    l += ["-" + k]
+                else:
+                    l += ["--" + k]
+            elif type(v) == bool and v is False:
+                continue
+            elif len(k) == 1:
+                l += ["-" + k, v]
+            else:
+                l += ["--" + k, v]
+
+        return l
 
     @MultiCmdContainer.impl_set_opt_params
     def set_minimus2_params(self, no_pre_merge=False):
@@ -36,7 +69,7 @@ optional arguments:
         if subcmd == "minimus2":
             inp = [sample.files[0].name]
             out = [sample.id + "_circular_contigs"]
-            self.cmd = [subcmd] + self.get_opt_params("metaspades_params") + inp + out
+            self.cmd = ["circlator", subcmd] + self.get_opt_params("minimus2_params") + inp + out
 
     @MultiCmdContainer.impl_run_parallel
     def run_parallel(self, sample, subcmd="minimus2"):
