@@ -12,12 +12,13 @@ class CacheFunc(object):
 
     def __call__(self, *args, **kwargs):
         files = args[0].files
+        sid = args[0].id
         call_hash = self.calc_hash(files, args, kwargs)
         response = False
         for path, dirs, files in os.walk(self.cachedir):
             for f in files:
                 if call_hash == f:
-                    print("cached object found: ", call_hash)
+                    print("{}: cached object found: ".format(sid), call_hash)
                     with open(os.path.join(path, f), "rb") as of:
                         response = pickle.load(of)
         if response == False:

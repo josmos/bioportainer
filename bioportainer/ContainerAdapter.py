@@ -22,6 +22,10 @@ import bioportainer.containers.picard_v2_3_9
 import bioportainer.containers.quast_v4_6_1
 import bioportainer.containers.circlator_v1_5_2
 import bioportainer.containers.prokka_v1_12_4
+import bioportainer.containers.cgview_v1_0
+import bioportainer.containers.hmmer2go_v0_17
+import bioportainer.containers.rgi_v3_2_1
+
 
 class ContainerAdapter():
     def __init__(self):
@@ -129,8 +133,20 @@ class ContainerAdapter():
             input_allowed=["fasta_se"])
 
         self.circlator_v1_5_2 = bioportainer.containers.circlator_v1_5_2.Circlator_v1_5_2(
-            "customcontainers/circlator:1.5.5", "containers/dockerfiles/circlator_v1_5_5", ["minimus2"], input_allowed=["fasta_se"])
+            "customcontainers/circlator:1.5.5", "containers/dockerfiles/circlator_v1_5_5", ["minimus2"],
+            input_allowed=["fasta_se"])
 
         self.prokka_v1_12_4 = bioportainer.containers.prokka_v1_12_4.Prokka_v1_12_4(
-            "quay.io/biocontainers/prokka:1.12--4", None,  input_allowed=["fasta_se"], output_type="gff")
+            "quay.io/biocontainers/prokka:1.12--4", None,  input_allowed=["fasta_se"], output_type=None)
 
+        self.cgview_v1_0 = bioportainer.containers.cgview_v1_0.Cgview_v1_0(
+            "quay.io/biocontainers/cgview:1.0--py36pl5.22.0_1", None, ["cgview", "cgview_xml_builder"],
+            input_allowed=["gff", "gbk", "xml"])
+
+        self.hmmer2go_v0_17_5 = bioportainer.containers.hmmer2go_v0_17.Hmmer2go_v0_17_5(
+            "customcontainers/hmmer2go:0.17.5", "containers/dockerfiles/hmmer2go_v0_17_5",
+            ["fetchmap", "getorf", "map2gaf", "mapterms", "pfamsearch", "run"], input_allowed=["fasta-se", "hmm", "txt"]
+            )
+
+        self.rgi_v3_2_1 = bioportainer.containers.rgi_v3_2_1.Rgi_v3_2_1("finlaymaguire/rgi:latest", None,
+                                                                 ["main", "tab", "parser", "database"], input_allowed=["fasta_se"])

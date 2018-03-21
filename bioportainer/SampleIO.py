@@ -173,7 +173,10 @@ class SampleIO:
     def filter_files(self, regex):
         new = copy.deepcopy(self)
         [new.files.remove(f) for f in self.files if not re.match(regex, f.name)]
-        new.cmd_hash = new.create_hash(new.cmd, new.files)
+        try:
+            new.cmd_hash = new.create_hash(new.cmd, new.files)
+        except AttributeError:
+            new.cmd_hash = new.create_hash(["None"], new.files)
         fn = os.path.join(bioportainer.Config.config.cache_dir, new.cmd_hash)
         with open(fn, "wb") as f:
             pickle.dump(new, f)
@@ -304,7 +307,7 @@ class SampleIO:
             return [".sco"]
 
         elif file_type == "txt":
-            return [".txt"]
+            return [".txt", ".tab", ".tsv"]
 
         elif file_type == "out":
             return [".out"]
@@ -331,6 +334,18 @@ class SampleIO:
 
         elif file_type == "mpi":
             return [".mpi"]
+
+        elif file_type == "xml":
+            return [".xml"]
+
+        elif file_type == "svg":
+            return [".svg"]
+
+        elif file_type == "png":
+            return [".png"]
+
+        elif file_type == "jpg":
+            return [".jpg"]
 
         else:
             return None
